@@ -7,15 +7,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Microsoft.AspNet.Identity.EntityFramework;
+using AgilAds.Helpers;
 
 namespace AgilAds.DAL
 {
     public class DbInit :
         System.Data.Entity.DropCreateDatabaseAlways<AgilAdsDataContext>
     {
+        private ApplicationDbContext db = new ApplicationDbContext();
         static ApplicationUserManager userManager;
 
-        static ApplicationRoleManager roleManager;
         protected override void Seed(AgilAdsDataContext context)
         {
             base.Seed(context);
@@ -23,18 +24,15 @@ namespace AgilAds.DAL
         }
         private void InitializeIdentityForEF(AgilAdsDataContext context)
         {
-            const string superUser = "fxyoung";
-            const string superUserEmail = "fxyoung@hotmail.com";
-            const string password = "Firef0x.com";
-            const string roleName = "SuperUser";
+            var settings = StartupSettings.GetStartupSettings();
+            string superUser = settings[StartupSettings.startupVar.Username];
+            string superUserEmail = settings[StartupSettings.startupVar.UserEmail];
+            string password = settings[StartupSettings.startupVar.UserPassword];
+            string roleName = settings[StartupSettings.startupVar.UserRole];
 
             userManager = HttpContext
             .Current.GetOwinContext()
             .GetUserManager<ApplicationUserManager>();
-
-            roleManager = HttpContext.Current
-            .GetOwinContext()
-            .Get<ApplicationRoleManager>();
 
             //var roleStore = new RoleStore<ApplicationRole, int, ApplicationUserRole>(context);
             // roleManager = new RoleManager<ApplicationRole, int>(roleStore);
@@ -42,14 +40,18 @@ namespace AgilAds.DAL
             // userManager = new UserManager<ApplicationUser, int>(userStore);   
 
             //Create roles that do not yet exist
-            var roles = Enum.GetNames(typeof(AgilAds.Helpers.Constants.roleMaster)).ToList();
-            foreach (var role in roles)
+//            var reqRoles = Enum.GetNames(typeof(AgilAds.Helpers.Constants.roleMaster)).ToList();
+            var reqRoles = settings[StartupSettings.startupVar.Rolenames]
+                .Split(new char[]{'|'});
+            var currRoles = db.Roles.ToList();
+            foreach (var role in reqRoles)
             {
-                if (roleManager.FindByName(role) == null)
+                if (!currRoles.Any(r=>r.Name.Equals(role)))
                 {
-                    roleManager.Create(new IdentityRole(role));
+                    db.Roles.Add(new IdentityRole(role));
                 }
             }
+            db.SaveChanges();
 
             var user = userManager.FindByName(superUser);
             if (user == null)
