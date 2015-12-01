@@ -17,6 +17,7 @@ namespace AgilAds.Models
         public string Region { get; set; }
         [Required]
         public int IdentityId { get; set; }
+        public int BusinessId { get; set; }
         [DataType(DataType.Currency)]
         public double Fee { get; set; }
         public double TaxRate { get; set; }
@@ -29,6 +30,8 @@ namespace AgilAds.Models
 
         [ForeignKey("IdentityId")]
         public virtual Person Identity { get; set; }
+        [ForeignKey("BusinessId")]
+        public virtual BusinessInfo Business { get; set; }
         public virtual ICollection<Member> Members { get; set; }
         public virtual ICollection<Institution> Institutions { get; set; }
         public virtual ICollection<Admin> Admins { get; set; }
