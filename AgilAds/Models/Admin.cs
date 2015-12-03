@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace AgilAds.Models
 {
+    [Table("Admins")]
     public class Admin
     {
         [Key]

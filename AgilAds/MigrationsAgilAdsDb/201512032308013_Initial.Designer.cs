@@ -7,13 +7,13 @@ namespace AgilAds.MigrationsAgilAdsDb
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class UpdateFieldFormats : IMigrationMetadata
+    public sealed partial class Initial : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(UpdateFieldFormats));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Initial));
         
         string IMigrationMetadata.Id
         {
-            get { return "201511260601041_UpdateFieldFormats"; }
+            get { return "201512032308013_Initial"; }
         }
         
         string IMigrationMetadata.Source

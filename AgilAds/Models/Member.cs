@@ -8,26 +8,29 @@ using System.Web.Mvc;
 
 namespace AgilAds.Models
 {
-    public class Member
+    [Table("Members")]
+    public class Member : BusinessInfo
     {
-        [Key]
-        public int id { get; set; }
+        //[Key]
+        //public int id { get; set; }
         [Required]
-        public int FocalPointId { get; set; }
+        public int FocalPointId { get; set; } //restricted to team members
         [ForeignKey("FocalPointId")]
         public virtual Person FocalPoint { get; set; }
-        [Required]
-        public int OrganizationId { get; set; }
-        [ForeignKey("OrganizationId")]
-        public virtual BusinessInfo Organization { get; set; }
+        //[Required]
+        //public int OrganizationId { get; set; }
+        //[ForeignKey("OrganizationId")]
+        //public virtual BusinessInfo Organization { get; set; }
         public string StaticMsg { get; set; }
 
-        [HiddenInput(DisplayValue = false)]
-        public DateTime Modified { get; set; }
-        [HiddenInput(DisplayValue = false)]
-        [MaxLength(25)]
-        public string ModifiedBy { get; set; }
+        //[HiddenInput(DisplayValue = false)]
+        //public DateTime Modified { get; set; }
+        //[HiddenInput(DisplayValue = false)]
+        //[MaxLength(25)]
+        //public string ModifiedBy { get; set; }
 
+        public virtual ICollection<RepPayment> RepPayments { get; set; }
+        public virtual ICollection<InstitutionPayment> InstitutionPayments { get; set; }
         public virtual ICollection<AdInfo> Ads { get; set; }
     }
 }

@@ -19,7 +19,7 @@ namespace AgilAds.Controllers
         // GET: Rep
         public async Task<ActionResult> Index()
         {
-            var rep = db.Rep.Include(r => r.Identity);
+            var rep = db.Rep.Include(r => r.FocalPoint);
             return View(await rep.ToListAsync());
         }
 
@@ -59,7 +59,7 @@ namespace AgilAds.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.IdentityId = new SelectList(db.People, "id", "Fullname", rep.IdentityId);
+            ViewBag.IdentityId = new SelectList(db.People, "id", "Fullname", rep.FocalPointId);
             return View(rep);
         }
 
@@ -75,7 +75,7 @@ namespace AgilAds.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.IdentityId = new SelectList(db.People, "id", "Fullname", rep.IdentityId);
+            ViewBag.IdentityId = new SelectList(db.People, "id", "Fullname", rep.FocalPointId);
             return View(rep);
         }
 
@@ -92,7 +92,7 @@ namespace AgilAds.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.IdentityId = new SelectList(db.People, "id", "Fullname", rep.IdentityId);
+            ViewBag.IdentityId = new SelectList(db.People, "id", "Fullname", rep.FocalPointId);
             return View(rep);
         }
 

@@ -8,12 +8,15 @@ using System.Web.Mvc;
 
 namespace AgilAds.Models
 {
+    [Table("People")]
     public class Person
     {
         [Key]
         public int id { get; set; }
         [Required]
         public int BusinessInfoId { get; set; }
+        [ForeignKey("BusinessInfoId")]
+        public virtual BusinessInfo Business { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public string Fullname
         {
@@ -41,6 +44,6 @@ namespace AgilAds.Models
         [MaxLength(25)]
         public string ModifiedBy { get; set; }
 
-        public virtual ICollection<PersonContactInfo> Contacts { get; set; }
+        public virtual ICollection<PersonalContact> Contacts { get; set; }
     }
 }

@@ -221,17 +221,9 @@
     <Compile Include="Helpers\ControllerExtensions.cs" />
     <Compile Include="Helpers\ReqBaseController.cs" />
     <Compile Include="Helpers\Utils.cs" />
-    <Compile Include="MigrationsAgilAdsDb\201511260456162_Initial.cs" />
-    <Compile Include="MigrationsAgilAdsDb\201511260456162_Initial.Designer.cs">
-      <DependentUpon>201511260456162_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MigrationsAgilAdsDb\201511260601041_UpdateFieldFormats.cs" />
-    <Compile Include="MigrationsAgilAdsDb\201511260601041_UpdateFieldFormats.Designer.cs">
-      <DependentUpon>201511260601041_UpdateFieldFormats.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MigrationsAgilAdsDb\201511290307285_AppPayments.cs" />
-    <Compile Include="MigrationsAgilAdsDb\201511290307285_AppPayments.Designer.cs">
-      <DependentUpon>201511290307285_AppPayments.cs</DependentUpon>
+    <Compile Include="MigrationsAgilAdsDb\201512032308013_Initial.cs" />
+    <Compile Include="MigrationsAgilAdsDb\201512032308013_Initial.Designer.cs">
+      <DependentUpon>201512032308013_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="MigrationsAgilAdsDb\Configuration.cs" />
     <Compile Include="MigrationsApplicationDb\201511252212224_Initial.cs" />
@@ -329,14 +321,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="MigrationsAgilAdsDb\201511260456162_Initial.resx">
-      <DependentUpon>201511260456162_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MigrationsAgilAdsDb\201511260601041_UpdateFieldFormats.resx">
-      <DependentUpon>201511260601041_UpdateFieldFormats.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MigrationsAgilAdsDb\201511290307285_AppPayments.resx">
-      <DependentUpon>201511290307285_AppPayments.cs</DependentUpon>
+    <EmbeddedResource Include="MigrationsAgilAdsDb\201512032308013_Initial.resx">
+      <DependentUpon>201512032308013_Initial.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MigrationsApplicationDb\201511252212224_Initial.resx">
       <DependentUpon>201511252212224_Initial.cs</DependentUpon>

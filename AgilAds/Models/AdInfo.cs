@@ -9,6 +9,7 @@ using System.Web.Mvc;
 namespace AgilAds.Models
 {
     public enum reqStatus { request, accept, reject }
+    [Table("AdInfoes")]
     public class AdInfo
     {
         [Key]
@@ -30,10 +31,10 @@ namespace AgilAds.Models
         [MaxLength(25)]
         public string ModifiedBy { get; set; }
 
-        //[ForeignKey("InstitutionID")]
-        //public virtual Institution Institution { get; set; }
-        //[ForeignKey("MemberID")]
-        //public virtual Member Member { get; set; }
+        [ForeignKey("InstitutionID")]
+        public virtual Institution Institution { get; set; }
+        [ForeignKey("MemberID")]
+        public virtual Member Member { get; set; }
         //public virtual ICollection<InstitutionalCharges> InstSurcharges { get; set; }
         //public virtual ICollection<SystemicCharges> SystemSurcharges { get; set; }
         //public virtual ICollection<Rating> UserComments { get; set; }

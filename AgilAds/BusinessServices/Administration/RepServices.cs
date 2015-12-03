@@ -24,7 +24,7 @@ namespace AgilAds.BusinessServices.Administration
 
         public Rep GetRepByName(string username)
         {
-            return _uow.RepRepository.GetFunc(r => r.Identity.Fullname.Equals(username));
+            return _uow.RepRepository.GetFunc(r => r.FocalPoint.Fullname.Equals(username));
         }
 
         public IEnumerable<Rep> GetWithInclude(

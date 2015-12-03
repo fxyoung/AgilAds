@@ -23,8 +23,8 @@ namespace AgilAds.DAL
             base.Seed(context);
             InitializeIdentityForEF(context);
             var testdata = new adsys(context);
-            var town = testdata.addBusiness(new BusinessInfo());
-            var eslID = testdata.addRep("East St. Louis", new Person(), new BusinessInfo());
+            //var town = testdata.addBusiness(new BusinessInfo());
+            //var eslID = testdata.addRep("East St. Louis", new Person(), new BusinessInfo());
         }
         private void InitializeIdentityForEF(AgilAdsDataContext context)
         {
@@ -152,8 +152,8 @@ namespace AgilAds.DAL
                     var re = new Rep();
                     re.id = ++rID;
                     re.Region = region;
-                    re.BusinessId = addBusiness(org);
-                    re.IdentityId = addPerson(rep, re.BusinessId);
+                    //re.BusinessId = addBusiness(org);
+                    //re.IdentityId = addPerson(rep, re.BusinessId);
                     _context.Rep.Add(re);
                     _context.SaveChanges();
                     retval = re.id;
@@ -176,14 +176,14 @@ namespace AgilAds.DAL
             }
             public int addBusiness(string name)
             {
-                var business = _context.FirstOrDefault(b =>
-                     b.OrganizationName.Equals(bi.OrganizationName));
-                if (business == null)
-                {
-                    bi.id = ++bID;
-                    _context.Business.Add(bi);
-                    return bi.id;
-                }
+                //var business = _context.FirstOrDefault(b =>
+                //     b.OrganizationName.Equals(bi.OrganizationName));
+                //if (business == null)
+                //{
+                //    bi.id = ++bID;
+                //    _context.Business.Add(bi);
+                //    return bi.id;
+                //}
                 return 0;// business.id;
             }
             public int addRepAdmin(int repID, Person adminUser)
