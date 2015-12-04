@@ -19,6 +19,7 @@ namespace AgilAds
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             Database.SetInitializer(new DbInit());
+            Helpers.Startup.ConfigDefaultRoles();
         }
     }
 }

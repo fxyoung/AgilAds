@@ -17,20 +17,23 @@ namespace AgilAds.Helpers
     public static class Constants
     {
         // rolename constants 
-        public enum roleMaster { SuperUser, SA, Representative, RA, Institution, Member }
-        public enum OwnerRoles { SuperUser, Representative }
-        public enum AdministrativeRoles { SA, RA }
+        //public enum roleMaster { SuperUser, SA, Representative, RA, Institution, Member }
+        //public enum OwnerRoles { SuperUser, Representative }
+        //public enum AdministrativeRoles { SA, RA }
 
         // Registration screen default values
         public const string defaultRole = "Dormant";
         public const int defaultRefId = -1;
     }
 
-    public static class StartupSettings
+    public static class Startup
     {
-        public enum startupVar
+        public static List<string> rolesMaster { get; private set; }
+        public static List<string> OwnerRoles { get; private set; }
+        public static List<string> AdminRoles { get; private set; }
+        private enum startupVar
         { Username, UserRole, UserEmail, UserPassword, Rolenames, OwnerRoles, AdminRoles }
-        public static Dictionary<startupVar, string> GetStartupSettings()
+        private static Dictionary<startupVar, string> GetStartupSettings()
         {
             var retval = new Dictionary<startupVar, string>();
             var prefix = "Startup:";
@@ -52,6 +55,61 @@ namespace AgilAds.Helpers
                 }
             }
             return retval;
+        }
+        public static void ConfigDefaultRoles()
+        {
+            var settings = GetStartupSettings();
+            rolesMaster = settings[startupVar.Rolenames]
+                .Split(new char[] { '|' }).ToList();
+            OwnerRoles = settings[startupVar.OwnerRoles]
+                .Split(new char[] { '|' }).ToList();
+            AdminRoles = settings[startupVar.AdminRoles]
+                .Split(new char[] { '|' }).ToList();
+        }
+        public static void ConfigDefaultUser(ApplicationDbContext context)
+        {
+            var settings = GetStartupSettings();
+            string superUser = settings[startupVar.Username];
+            string superUserEmail = settings[startupVar.UserEmail];
+            string password = settings[startupVar.UserPassword];
+            string roleName = settings[startupVar.UserRole];
+
+            ApplicationUserManager userManager = HttpContext
+            .Current.GetOwinContext()
+            .GetUserManager<ApplicationUserManager>();
+
+            //Create roles that do not yet exist
+            var reqRoles = settings[startupVar.Rolenames]
+                .Split(new char[] { '|' });
+            var currRoles = context.Roles.ToList();
+            foreach (var role in reqRoles)
+            {
+                if (!currRoles.Any(r => r.Name.Equals(role)))
+                {
+                    context.Roles.Add(new IdentityRole(role));
+                }
+            }
+            context.SaveChanges();
+            var user = userManager.FindByName(superUser);
+            if (user == null)
+            {
+                user = new ApplicationUser
+                {
+                    UserName = superUser,
+                    Email = superUserEmail,
+                    Status = roleName,
+                    RepId = -1
+                };
+                userManager.Create(user, password);
+                userManager.SetLockoutEnabled(user.Id, false);
+            }
+
+            // Add user rolename if not already added
+            var rolesForUser = userManager.GetRoles(user.Id);
+            if (!rolesForUser.Contains(roleName))
+            {
+                var result = userManager.AddToRole(user.Id, roleName);
+            }
         }
     }
 

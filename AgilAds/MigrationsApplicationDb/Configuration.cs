@@ -1,9 +1,15 @@
 namespace AgilAds.MigrationsApplicationDb
 {
+    using AgilAds.Helpers;
+    using AgilAds.Models;
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
+    using Microsoft.AspNet.Identity.Owin;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
+    using System.Web;
 
     internal sealed class Configuration : DbMigrationsConfiguration<AgilAds.Models.ApplicationDbContext>
     {
@@ -27,6 +33,7 @@ namespace AgilAds.MigrationsApplicationDb
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
+            Startup.ConfigDefaultUser(context);
         }
     }
 }

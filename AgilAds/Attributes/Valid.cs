@@ -27,13 +27,13 @@ namespace AgilAds.Attributes
             bool retval = true;
             bool throwOnNotAuthorized = false;
             bool ownerRole =
-                Enum.GetNames(typeof(Constants.OwnerRoles)).
+                Helpers.Startup.OwnerRoles.
                 Any(a => controller.User.IsInRole(a));
             bool adminRole = false;
             if (!ownerRole)
             {
                 adminRole =
-                    Enum.GetNames(typeof(Constants.AdministrativeRoles)).
+                    Helpers.Startup.AdminRoles.
                     Any(a => controller.User.IsInRole(a));
             }
             var priv = getPrivileges(controller.User.Identity.Name, uow);
