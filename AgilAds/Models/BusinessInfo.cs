@@ -23,12 +23,6 @@ namespace AgilAds.Models
         public string BankAcctNo { get; set; }
 
         [HiddenInput(DisplayValue = false)]
-        public DateTime Modified { get; set; }
-        [HiddenInput(DisplayValue = false)]
-        [MaxLength(25)]
-        public string ModifiedBy { get; set; }
-
-        [HiddenInput(DisplayValue = false)]
         public byte[] ArcSum { get; set; }  //checksum
         [HiddenInput(DisplayValue = false)]
         public byte[] Secret { get; set; }  //key

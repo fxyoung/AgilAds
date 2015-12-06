@@ -25,12 +25,6 @@ namespace AgilAds.Models
         [Required]
         public reqStatus ReqStatus { get; set; }
 
-        [HiddenInput(DisplayValue = false)]
-        public DateTime Modified { get; set; }
-        [HiddenInput(DisplayValue = false)]
-        [MaxLength(25)]
-        public string ModifiedBy { get; set; }
-
         [ForeignKey("InstitutionID")]
         public virtual Institution Institution { get; set; }
         [ForeignKey("MemberID")]

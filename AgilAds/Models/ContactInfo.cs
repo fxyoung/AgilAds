@@ -8,9 +8,9 @@ using System.Web;
 
 namespace AgilAds.Models
 {
-    public enum contactMethod { phone, email, address, webSite, sms }
     public abstract class ContactInfo
     {
+        public enum contactMethod { phone, email, address, webSite, sms }
         [Key]
         public int id { get; set; }
         [Required]

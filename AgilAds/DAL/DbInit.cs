@@ -9,6 +9,7 @@ using System.Web;
 using Microsoft.AspNet.Identity.EntityFramework;
 using AgilAds.Helpers;
 using AgilAds.Attributes;
+using System.Data.Entity.Validation;
 
 namespace AgilAds.DAL
 {
@@ -21,62 +22,65 @@ namespace AgilAds.DAL
         protected override void Seed(AgilAdsDataContext context)
         {
             base.Seed(context);
-            InitializeIdentityForEF(context);
+            Helpers.Startup.getConfigDefaults();
             var testdata = new adsys(context);
+
+            userManager = HttpContext
+            .Current.GetOwinContext()
+            .GetUserManager<ApplicationUserManager>();
+
+            var p = new Person()
+            {
+                Firstname = "Frazier",
+                Lastname = "Young",
+                Username = Helpers.Startup.defaultUser,
+                Contacts = new List<PersonalContact>()
+            };
+            var b = new BusinessInfo() { OrganizationName = "AgilAds" };
+            var repId = testdata.addRep("Burien WA", p, b);
+            testdata.addBusinessContact(repId, new BusinessContact()
+            {
+                Contact = "123 E 47th St, Burien, WA 98168",
+                Method = ContactInfo.contactMethod.address
+            });
+            testdata.addBusinessContact(repId, new BusinessContact()
+            {
+                Contact = "agilads@gmail.com",
+                Method = ContactInfo.contactMethod.email
+            });
+            testdata.addBusinessContact(repId, new BusinessContact()
+            {
+                Contact = "agilads@primeSites.com",
+                Method = ContactInfo.contactMethod.email
+            });
+            testdata.addBusinessContact(repId, new BusinessContact()
+            {
+                Contact = "www.agilads.com",
+                Method = ContactInfo.contactMethod.webSite
+            });
+            testdata.addBusinessContact(repId, new BusinessContact()
+            {
+                Contact = "206.555.1122",
+                Method = ContactInfo.contactMethod.phone
+            });
+            var teamBurien1 = testdata.addTeamMember(repId, new Person() 
+            { 
+                Firstname = "Al", 
+                Lastname = "Green",
+                Contacts = new List<PersonalContact>(),
+                Username = "algreen" });
+            testdata.addPersonalContact(repId, teamBurien1, new PersonalContact()
+            {
+                Contact = "206.555.1122",
+                Method = ContactInfo.contactMethod.phone
+            });
+            testdata.addPersonalContact(repId, teamBurien1, new PersonalContact()
+            {
+                Contact = "agilads@primeSites.com",
+                Method = ContactInfo.contactMethod.email
+            });
             //var town = testdata.addBusiness(new BusinessInfo());
             //var eslID = testdata.addRep("East St. Louis", new Person(), new BusinessInfo());
-        }
-        private void InitializeIdentityForEF(AgilAdsDataContext context)
-        {
-//            var settings = StartupSettings.GetStartupSettings();
-//            string superUser = settings[StartupSettings.startupVar.Username];
-//            string superUserEmail = settings[StartupSettings.startupVar.UserEmail];
-//            string password = settings[StartupSettings.startupVar.UserPassword];
-//            string roleName = settings[StartupSettings.startupVar.UserRole];
-
-//            userManager = HttpContext
-//            .Current.GetOwinContext()
-//            .GetUserManager<ApplicationUserManager>();
-
-//            //var roleStore = new RoleStore<ApplicationRole, int, ApplicationUserRole>(context);
-//            // roleManager = new RoleManager<ApplicationRole, int>(roleStore);
-//            //var userStore = new UserStore<ApplicationUser, ApplicationRole, int, ApplicationUserLogin, ApplicationUserRole, ApplicationUserClaim>(context);
-//            // userManager = new UserManager<ApplicationUser, int>(userStore);   
-
-//            //Create roles that do not yet exist
-////            var reqRoles = Enum.GetNames(typeof(AgilAds.Helpers.Constants.roleMaster)).ToList();
-//            var reqRoles = settings[StartupSettings.startupVar.Rolenames]
-//                .Split(new char[]{'|'});
-//            var currRoles = db.Roles.ToList();
-//            foreach (var role in reqRoles)
-//            {
-//                if (!currRoles.Any(r=>r.Name.Equals(role)))
-//                {
-//                    db.Roles.Add(new IdentityRole(role));
-//                }
-//            }
-//            db.SaveChanges();
-
-//            var user = userManager.FindByName(superUser);
-//            if (user == null)
-//            {
-//                user = new ApplicationUser
-//                {
-//                    UserName = superUser,
-//                    Email = superUserEmail,
-//                    Status = roleName,
-//                    RepId = -1
-//                };
-//                userManager.Create(user, password);
-//                userManager.SetLockoutEnabled(user.Id, false);
-//            }
-
-//            // Add user rolename if not already added
-//            var rolesForUser = userManager.GetRoles(user.Id);
-//            if (!rolesForUser.Contains(roleName))
-//            {
-//                var result = userManager.AddToRole(user.Id, roleName);
-//            }
         }
         class adsys
         {
@@ -150,16 +154,66 @@ namespace AgilAds.DAL
                 int retval = -1;
                 {
                     var re = new Rep();
-                    re.id = ++rID;
                     re.Region = region;
-                    //re.BusinessId = addBusiness(org);
-                    //re.IdentityId = addPerson(rep, re.BusinessId);
+                    re.Contacts = new List<BusinessContact>();
+                    re.Team = new List<Person>();
+                    re.Team.Add(rep);
+                    re.FocalPoint = rep;
+                    re.OrganizationName = org.OrganizationName;
                     _context.Rep.Add(re);
-                    _context.SaveChanges();
+                    SaveChanges(_context);
                     retval = re.id;
-                    pushUser(rep, "Representative");
+                    pushUser(rep, "RA");
                 }
                 return retval;
+            }
+            public void addBusinessContact(int repId, BusinessContact bc)
+            {
+                var rep = _context.Rep.FirstOrDefault(r => r.id.Equals(repId));
+                if (rep != null)
+                {
+                    rep.Contacts.Add(bc);
+                    SaveChanges(_context);
+                }
+            }
+            public void addPersonalContact(int repId, int personId, PersonalContact pc)
+            {
+                var rep = _context.Rep.FirstOrDefault(r => r.id.Equals(repId));
+                if (rep != null)
+                {
+                    var person = _context.People.FirstOrDefault(p => p.id.Equals(personId));
+                    if (person != null && person.BusinessInfoId.Equals(rep.id))
+                    {
+                        person.Contacts.Add(pc);
+                        SaveChanges(_context);
+                    }
+                }
+            }
+            public int addTeamMember(int repId, Person member)
+            {
+                int retval = -1;
+                var rep = _context.Rep.FirstOrDefault(r => r.id.Equals(repId));
+                if (rep != null)
+                {
+                    rep.Team.Add(member);
+                    SaveChanges(_context);
+                    retval = member.id;
+                }
+                return retval;
+            }
+            public void SaveChanges(AgilAdsDataContext context)
+            {
+                try
+                {
+                    // Your code...
+                    // Could also be before try if you know the exception occurs in SaveChanges
+
+                    context.SaveChanges("DbInit");
+                }
+                catch (DbEntityValidationException e)
+                {
+                    throw;
+                }
             }
             public int addPerson(Person p, int biid)
             {

@@ -26,10 +26,5 @@ namespace AgilAds.Models
         [StringLength(25, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 2)]
         [RegularExpression("^[a-zA-Z][a-zA-Z]*")]
         public string Action { get; set; }
-
-        [HiddenInput(DisplayValue = false)]
-        public DateTime Modified { get; set; }
-        [HiddenInput(DisplayValue = false)]
-        public string ModifiedBy { get; set; }
     }
 }

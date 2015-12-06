@@ -12,18 +12,18 @@ using AgilAds.Models;
 
 namespace AgilAds.Controllers
 {
-    public class RepController : Controller
+    public class RepsController : Controller
     {
         private AgilAdsDataContext db = new AgilAdsDataContext();
 
-        // GET: Rep
+        // GET: Reps
         public async Task<ActionResult> Index()
         {
-            var rep = db.Rep.Include(r => r.FocalPoint);
-            return View(await rep.ToListAsync());
+            var businessInfoes = db.Rep.Include(r => r.FocalPoint);
+            return View(await businessInfoes.ToListAsync());
         }
 
-        // GET: Rep/Details/5
+        // GET: Reps/Details/5
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
@@ -38,19 +38,19 @@ namespace AgilAds.Controllers
             return View(rep);
         }
 
-        // GET: Rep/Create
+        // GET: Reps/Create
         public ActionResult Create()
         {
-            ViewBag.IdentityId = new SelectList(db.People, "id", "Fullname");
+            ViewBag.FocalPointId = new SelectList(db.People, "id", "Fullname");
             return View();
         }
 
-        // POST: Rep/Create
+        // POST: Reps/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "id,Region,IdentityId,Fee,TaxRate,Modified,ModifiedBy")] Rep rep)
+        public async Task<ActionResult> Create([Bind(Include = "id,OrganizationName,BankAcctNo,Modified,ModifiedBy,ArcSum,Secret,Region,FocalPointId,Fee,TaxRate")] Rep rep)
         {
             if (ModelState.IsValid)
             {
@@ -59,11 +59,11 @@ namespace AgilAds.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.IdentityId = new SelectList(db.People, "id", "Fullname", rep.FocalPointId);
+            ViewBag.FocalPointId = new SelectList(db.People, "id", "Fullname", rep.FocalPointId);
             return View(rep);
         }
 
-        // GET: Rep/Edit/5
+        // GET: Reps/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -75,16 +75,16 @@ namespace AgilAds.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.IdentityId = new SelectList(db.People, "id", "Fullname", rep.FocalPointId);
+            ViewBag.FocalPointId = new SelectList(db.People, "id", "Fullname", rep.FocalPointId);
             return View(rep);
         }
 
-        // POST: Rep/Edit/5
+        // POST: Reps/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "id,Region,IdentityId,Fee,TaxRate,Modified,ModifiedBy")] Rep rep)
+        public async Task<ActionResult> Edit([Bind(Include = "id,OrganizationName,BankAcctNo,Modified,ModifiedBy,ArcSum,Secret,Region,FocalPointId,Fee,TaxRate")] Rep rep)
         {
             if (ModelState.IsValid)
             {
@@ -92,11 +92,11 @@ namespace AgilAds.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.IdentityId = new SelectList(db.People, "id", "Fullname", rep.FocalPointId);
+            ViewBag.FocalPointId = new SelectList(db.People, "id", "Fullname", rep.FocalPointId);
             return View(rep);
         }
 
-        // GET: Rep/Delete/5
+        // GET: Reps/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -111,7 +111,7 @@ namespace AgilAds.Controllers
             return View(rep);
         }
 
-        // POST: Rep/Delete/5
+        // POST: Reps/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)

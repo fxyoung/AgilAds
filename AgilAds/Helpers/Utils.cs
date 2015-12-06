@@ -31,32 +31,33 @@ namespace AgilAds.Helpers
         public static List<string> rolesMaster { get; private set; }
         public static List<string> OwnerRoles { get; private set; }
         public static List<string> AdminRoles { get; private set; }
+        public static string defaultUser { get; private set; }
         private enum startupVar
         { Username, UserRole, UserEmail, UserPassword, Rolenames, OwnerRoles, AdminRoles }
         private static Dictionary<startupVar, string> GetStartupSettings()
         {
             var retval = new Dictionary<startupVar, string>();
             var prefix = "Startup:";
-            var webConfig = System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration(null);
-            if (webConfig.AppSettings.Settings.Count > 0)
+            var webConfig = System.Web.Configuration.WebConfigurationManager.AppSettings;//["configFile"];//.OpenWebConfiguration("configFile");
+            if (webConfig.Count > 0)
             {
                 foreach (var startupVar in Enum.GetNames(typeof(startupVar)))
                 {
                     var varname = prefix + startupVar;
-                    var setting = webConfig.AppSettings.Settings[varname];
+                    var setting = webConfig[varname];
                     if(setting != null)
                     {
                         startupVar key = (startupVar)Enum.Parse(typeof(startupVar), startupVar);
                         if(!retval.ContainsKey(key))
                         {
-                            retval.Add(key,setting.Value);
+                            retval.Add(key,setting);
                         }
                     }
                 }
             }
             return retval;
         }
-        public static void ConfigDefaultRoles()
+        public static void getConfigDefaults()
         {
             var settings = GetStartupSettings();
             rolesMaster = settings[startupVar.Rolenames]
@@ -65,6 +66,7 @@ namespace AgilAds.Helpers
                 .Split(new char[] { '|' }).ToList();
             AdminRoles = settings[startupVar.AdminRoles]
                 .Split(new char[] { '|' }).ToList();
+            defaultUser = settings[startupVar.Username];
         }
         public static void ConfigDefaultUser(ApplicationDbContext context)
         {
@@ -110,6 +112,7 @@ namespace AgilAds.Helpers
             {
                 var result = userManager.AddToRole(user.Id, roleName);
             }
+            defaultUser = superUser;
         }
     }
 

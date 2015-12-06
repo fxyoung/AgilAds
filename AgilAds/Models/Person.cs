@@ -38,12 +38,6 @@ namespace AgilAds.Models
         [RegularExpression("^[a-zA-Z][a-zA-Z0-9.@$!#%?_]*")]
         public string Username { get; set; }
 
-        [HiddenInput(DisplayValue = false)]
-        public DateTime Modified { get; set; }
-        [HiddenInput(DisplayValue = false)]
-        [MaxLength(25)]
-        public string ModifiedBy { get; set; }
-
         public virtual ICollection<PersonalContact> Contacts { get; set; }
     }
 }

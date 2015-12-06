@@ -24,12 +24,6 @@ namespace AgilAds.Models
         [DataType(DataType.Currency)]
         public double MonthlyAdFee { get; set; }
 
-        //[HiddenInput(DisplayValue = false)]
-        //public DateTime Modified { get; set; }
-        //[HiddenInput(DisplayValue = false)]
-        //[MaxLength(25)]
-        //public string ModifiedBy { get; set; }
-
         public virtual ICollection<AdInfo> Ads { get; set; }
         public virtual ICollection<InstitutionPayment> Receipts { get; set; }
     }

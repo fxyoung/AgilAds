@@ -209,8 +209,9 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\RepController.cs" />
+    <Compile Include="Controllers\RepsController.cs" />
     <Compile Include="DAL\AgilAdsDataContext.cs" />
+    <Compile Include="DAL\Audit\AuditDataContext.cs" />
     <Compile Include="DAL\DbInit.cs" />
     <Compile Include="DAL\GenericRepository.cs" />
     <Compile Include="DAL\IUnitOfWork.cs" />
@@ -225,17 +226,31 @@
     <Compile Include="MigrationsAgilAdsDb\201512032308013_Initial.Designer.cs">
       <DependentUpon>201512032308013_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="MigrationsAgilAdsDb\201512060228300_RemovedModifiedInfo.cs" />
+    <Compile Include="MigrationsAgilAdsDb\201512060228300_RemovedModifiedInfo.Designer.cs">
+      <DependentUpon>201512060228300_RemovedModifiedInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="MigrationsAgilAdsDb\Configuration.cs" />
     <Compile Include="MigrationsApplicationDb\201511252212224_Initial.cs" />
     <Compile Include="MigrationsApplicationDb\201511252212224_Initial.Designer.cs">
       <DependentUpon>201511252212224_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="MigrationsApplicationDb\Configuration.cs" />
+    <Compile Include="MigrationsAuditDb\201512060231113_Initial.cs" />
+    <Compile Include="MigrationsAuditDb\201512060231113_Initial.Designer.cs">
+      <DependentUpon>201512060231113_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationsAuditDb\201512060250490_RemovedPropertyname.cs" />
+    <Compile Include="MigrationsAuditDb\201512060250490_RemovedPropertyname.Designer.cs">
+      <DependentUpon>201512060250490_RemovedPropertyname.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationsAuditDb\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdInfo.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\BusinessInfo.cs" />
     <Compile Include="Models\ContactInfo.cs" />
+    <Compile Include="Models\DbAudit.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Institution.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -308,6 +323,11 @@
     <Content Include="Views\Rep\Details.cshtml" />
     <Content Include="Views\Rep\Edit.cshtml" />
     <Content Include="Views\Rep\Index.cshtml" />
+    <Content Include="Views\Reps\Create.cshtml" />
+    <Content Include="Views\Reps\Delete.cshtml" />
+    <Content Include="Views\Reps\Details.cshtml" />
+    <Content Include="Views\Reps\Edit.cshtml" />
+    <Content Include="Views\Reps\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -324,8 +344,17 @@
     <EmbeddedResource Include="MigrationsAgilAdsDb\201512032308013_Initial.resx">
       <DependentUpon>201512032308013_Initial.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MigrationsAgilAdsDb\201512060228300_RemovedModifiedInfo.resx">
+      <DependentUpon>201512060228300_RemovedModifiedInfo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MigrationsApplicationDb\201511252212224_Initial.resx">
       <DependentUpon>201511252212224_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationsAuditDb\201512060231113_Initial.resx">
+      <DependentUpon>201512060231113_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationsAuditDb\201512060250490_RemovedPropertyname.resx">
+      <DependentUpon>201512060250490_RemovedPropertyname.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -17,12 +17,6 @@ namespace AgilAds.Models
         public int IdentityId { get; set; }
         public DateTime? Expiration { get; set; }
 
-        [HiddenInput(DisplayValue = false)]
-        public DateTime Modified { get; set; }
-        [HiddenInput(DisplayValue = false)]
-        [MaxLength(25)]
-        public string ModifiedBy { get; set; }
-
         [ForeignKey("IdentityId")]
         public virtual Person Identity { get; set; }
     }

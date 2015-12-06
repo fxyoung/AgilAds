@@ -23,12 +23,6 @@ namespace AgilAds.Models
         //public virtual BusinessInfo Organization { get; set; }
         public string StaticMsg { get; set; }
 
-        //[HiddenInput(DisplayValue = false)]
-        //public DateTime Modified { get; set; }
-        //[HiddenInput(DisplayValue = false)]
-        //[MaxLength(25)]
-        //public string ModifiedBy { get; set; }
-
         public virtual ICollection<RepPayment> RepPayments { get; set; }
         public virtual ICollection<InstitutionPayment> InstitutionPayments { get; set; }
         public virtual ICollection<AdInfo> Ads { get; set; }
