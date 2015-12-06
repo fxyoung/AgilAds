@@ -68,7 +68,7 @@ namespace AgilAds.DAL
                 Firstname = "Al", 
                 Lastname = "Green",
                 Contacts = new List<PersonalContact>(),
-                Username = "algreen" });
+                Username = "algreen" },"RA");
             testdata.addPersonalContact(repId, teamBurien1, new PersonalContact()
             {
                 Contact = "206.555.1122",
@@ -79,41 +79,76 @@ namespace AgilAds.DAL
                 Contact = "agilads@primeSites.com",
                 Method = ContactInfo.contactMethod.email
             });
-            //var town = testdata.addBusiness(new BusinessInfo());
-            //var eslID = testdata.addRep("East St. Louis", new Person(), new BusinessInfo());
+            var bi = new BusinessInfo() { OrganizationName = "Al's Emporium" };
+            var pc = new List<PersonalContact>() { new PersonalContact(){ 
+                            Method=AgilAds.Models.ContactInfo.contactMethod.email, 
+                            Contact="foo@bar.com"}};
+            p = new Person(){Firstname="Al", Lastname="Johnstone", Contacts=pc};
+            var memAl = testdata.addMemberOrg(repId, p, bi);
+            bi = new BusinessInfo() { OrganizationName = "Hot Shot Beauty Salon" };
+            pc = new List<PersonalContact>() { new PersonalContact(){ 
+                            Method=AgilAds.Models.ContactInfo.contactMethod.phone, 
+                            Contact="1-800-555-1212"}};
+            p = new Person() { Firstname = "Mabel", Lastname = "Smith", Contacts = pc };
+            var memMabel = testdata.addMemberOrg(repId, p, bi);
+            bi = new BusinessInfo() { OrganizationName = "The Hat Store" };
+            pc = new List<PersonalContact>() { new PersonalContact(){ 
+                            Method=AgilAds.Models.ContactInfo.contactMethod.email, 
+                            Contact="missy@hats.com"}};
+            p = new Person() { Firstname = "Missy", Lastname = "Fine", Contacts = pc };
+            var memMissy = testdata.addMemberOrg(repId, p, bi);
+            bi = new BusinessInfo() { OrganizationName = "Sue Hu Pool Hall" };
+            pc = new List<PersonalContact>() { new PersonalContact(){ 
+                            Method=AgilAds.Models.ContactInfo.contactMethod.sms, 
+                            Contact="1-888-555-1234"}};
+            p = new Person() { Firstname = "Sue", Lastname = "Hu", Contacts = pc };
+            var memSue = testdata.addMemberOrg(repId, p, bi);
+            bi = new BusinessInfo() { OrganizationName = "Jake's Auto Repair" };
+            pc = new List<PersonalContact>() { new PersonalContact(){ 
+                            Method=AgilAds.Models.ContactInfo.contactMethod.email, 
+                            Contact="jake@memphis.com"}};
+            p = new Person() { Firstname = "Jake", Lastname = "Memphis", Contacts = pc };
+            var memJake = testdata.addMemberOrg(repId, p, bi);
+            var bc = new List<BusinessContact>(){ new BusinessContact(){
+                            Method=AgilAds.Models.ContactInfo.contactMethod.address, 
+                            Contact="3233 W 47th Blvd, Seahurst, Wa 98145"}};
+            bi = new BusinessInfo() { OrganizationName = "Burien Chamber of Commerce", Contacts = bc };
+            pc = new List<PersonalContact>() { new PersonalContact(){ 
+                            Method=AgilAds.Models.ContactInfo.contactMethod.phone, 
+                            Contact="206--555-4321 ext 4423"}};
+            p = new Person() { Firstname = "Maria", Lastname = "Jones", Contacts = pc };
+            var insBCOC = testdata.addInstitution(repId, p, bi);
+            pc = new List<PersonalContact>() { new PersonalContact(){ 
+                            Method=AgilAds.Models.ContactInfo.contactMethod.phone, 
+                            Contact="206--555-4321 ext 4427"}};
+            p = new Person() { Firstname = "Foster", Lastname = "Wright", Contacts = pc };
+            var insBCOCtm1 = testdata.addInsTeamMember(repId, insBCOC, p);
+            bc = new List<BusinessContact>(){ new BusinessContact(){
+                            Method=AgilAds.Models.ContactInfo.contactMethod.address, 
+                            Contact="334 Ridgeway, Des Moines, WA 98136"},
+                            new BusinessContact(){
+                                Method=AgilAds.Models.ContactInfo.contactMethod.phone,
+                                Contact="206-555-9876"
+                            }
+            };
+            bi = new BusinessInfo() { OrganizationName = "South Seattle Community College School of Business", Contacts = bc };
+            pc = new List<PersonalContact>() { new PersonalContact(){ 
+                            Method=AgilAds.Models.ContactInfo.contactMethod.phone, 
+                            Contact="206-555-2805 ext 23"}};
+            p = new Person() { Firstname = "Paul", Lastname = "Ingles", Contacts = pc };
+            var insSSCCSOB = testdata.addInstitution(repId, p, bi);
+            pc = new List<PersonalContact>() { new PersonalContact(){ 
+                            Method=AgilAds.Models.ContactInfo.contactMethod.phone, 
+                            Contact="206--555-2805 ext 427"}};
+            p = new Person() { Firstname = "Marty", Lastname = "Frank", Contacts = pc };
+            var insSSCCSOBtm1 = testdata.addInsTeamMember(repId, insBCOC, p);
         }
         class adsys
         {
             private AgilAdsDataContext _context;
-            private string _superUser = null;
-            private int saID = 0;
-            private int spID = 0;
-            private int rID = 0;
-            private int pID = 0;
-            private int bID = 0;
-            private int raID = 0;
-            private int iID = 0;
-            private int mID = 0;
             public adsys(AgilAdsDataContext context)
             {
                 _context = context;
-            }
-            public int addSuperAdmin(Person adminUser)
-            {
-                int retval = -1;
-                if (!String.IsNullOrWhiteSpace(_superUser) &&
-                    !String.IsNullOrWhiteSpace(adminUser.Username))
-                {
-                    //var sae = new SuperAdmin();
-                    //sae.id = ++saID;
-                    //sae.Username = adminUser.Username;
-                    //sae.Expiration = DateTime.Now.AddDays(14);
-                    //_context.SuperAdmin.Add(sae);
-                    //_context.SaveChanges();
-                    //retval = sae.id;
-                    //pushUser(adminUser, "SA");
-                }
-                return retval;
             }
             void pushUser(Person person, string role)
             {
@@ -163,7 +198,7 @@ namespace AgilAds.DAL
                     _context.Rep.Add(re);
                     SaveChanges(_context);
                     retval = re.id;
-                    pushUser(rep, "RA");
+                    pushUser(rep, "Representative");
                 }
                 return retval;
             }
@@ -189,7 +224,7 @@ namespace AgilAds.DAL
                     }
                 }
             }
-            public int addTeamMember(int repId, Person member)
+            public int addTeamMember(int repId, Person member, string role)
             {
                 int retval = -1;
                 var rep = _context.Rep.FirstOrDefault(r => r.id.Equals(repId));
@@ -198,6 +233,79 @@ namespace AgilAds.DAL
                     rep.Team.Add(member);
                     SaveChanges(_context);
                     retval = member.id;
+                    pushUser(member, role);
+                }
+                return retval;
+            }
+            public int addMemberOrg(int repId, Person focal, BusinessInfo org)
+            {
+                int retval = -1;
+                var rep = _context.Rep.FirstOrDefault(r => r.id.Equals(repId));
+                if (rep != null)
+                {
+                    var mem = new Member();
+                    mem.Contacts = new List<BusinessContact>();
+                    mem.Team = new List<Person>();
+                    mem.Team.Add(focal);
+                    mem.FocalPoint = focal;
+                    mem.OrganizationName = org.OrganizationName;
+                    rep.Members.Add(mem);
+                    SaveChanges(_context);
+                    retval = mem.id;
+                    pushUser(focal, "Member");
+                }
+                return retval;
+            }
+            public int addMemTeamMember(int repId, int memId, Person member)
+            {
+                int retval = -1;
+                var rep = _context.Rep.FirstOrDefault(r => r.id.Equals(repId));
+                if (rep != null)
+                {
+                    var mem = rep.Members.FirstOrDefault(m => m.id.Equals(memId));
+                    if (mem != null)
+                    {
+                        mem.Team.Add(member);
+                        SaveChanges(_context);
+                        retval = member.id;
+                        pushUser(member, "Member");
+                    }
+                }
+                return retval;
+            }
+            public int addInstitution(int repId, Person focal, BusinessInfo org)
+            {
+                int retval = -1;
+                var rep = _context.Rep.FirstOrDefault(r => r.id.Equals(repId));
+                if (rep != null)
+                {
+                    var ins = new Institution();
+                    ins.Contacts = new List<BusinessContact>();
+                    ins.Team = new List<Person>();
+                    ins.Team.Add(focal);
+                    ins.FocalPoint = focal;
+                    ins.OrganizationName = org.OrganizationName;
+                    rep.Institutions.Add(ins);
+                    SaveChanges(_context);
+                    retval = ins.id;
+                    pushUser(focal, "Institution");
+                }
+                return retval;
+            }
+            public int addInsTeamMember(int repId, int insId, Person member)
+            {
+                int retval = -1;
+                var rep = _context.Rep.FirstOrDefault(r => r.id.Equals(repId));
+                if (rep != null)
+                {
+                    var ins = rep.Institutions.FirstOrDefault(m => m.id.Equals(insId));
+                    if (ins != null)
+                    {
+                        ins.Team.Add(member);
+                        SaveChanges(_context);
+                        retval = member.id;
+                        pushUser(member, "Institution");
+                    }
                 }
                 return retval;
             }
@@ -212,77 +320,9 @@ namespace AgilAds.DAL
                 }
                 catch (DbEntityValidationException e)
                 {
-                    throw;
+                    throw e;
                 }
             }
-            public int addPerson(Person p, int biid)
-            {
-                var indiv = _context.People.FirstOrDefault(i =>
-                     i.Fullname.Equals(p.Fullname));
-                if (indiv == null)
-                {
-                    p.id = ++pID;
-                    p.BusinessInfoId = biid;
-                    _context.People.Add(p);
-                    return p.id;
-                }
-                return 0;// indiv.id;
-            }
-            public int addBusiness(string name)
-            {
-                //var business = _context.FirstOrDefault(b =>
-                //     b.OrganizationName.Equals(bi.OrganizationName));
-                //if (business == null)
-                //{
-                //    bi.id = ++bID;
-                //    _context.Business.Add(bi);
-                //    return bi.id;
-                //}
-                return 0;// business.id;
-            }
-            public int addRepAdmin(int repID, Person adminUser)
-            {
-                int retval = -1;
-                if (!String.IsNullOrWhiteSpace(adminUser.Username))
-                {
-                    //var rae = new RepAdmin();
-                    //rae.id = ++raID;
-                    //rae.RepID = repID;
-                    //rae.Username = adminUser.Username;
-                    //rae.Expiration = new DateTime().AddDays(14);
-                    //_context.RepAdmin.Add(rae);
-                    //_context.SaveChanges();
-                    //retval = rae.id;
-                    //pushUser(adminUser, "RA");
-                }
-                return retval;
-            }
-            //public int addInstitution(int ownerID, Person focal, BusinessInfo org)
-            //{
-            //    int retval = -1;
-            //    var ie = new Institution();
-            //    ie.id = ++iID;
-            //    ie.OwnerID = ownerID;
-            //    ie.FocalPoint = focal;
-            //    ie.Organization = org;
-            //    _context.Institutions.Add(ie);
-            //    _context.SaveChanges();
-            //    retval = ie.id;
-            //    return retval;
-            //}
-            //public int addMember(int ownerID, Person focal, BusinessInfo org)
-            //{
-            //    int retval = -1;
-            //    var me = new Member();
-            //    me.id = ++mID;
-            //    me.OwnerID = ownerID;
-            //    me.FocalPoint = focal;
-            //    me.Organization = org;
-            //    _context.Members.Add(me);
-            //    _context.SaveChanges();
-            //    retval = me.id;
-            //    return retval;
-            //}
         };
     }
 }
