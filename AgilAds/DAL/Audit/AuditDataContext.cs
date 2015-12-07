@@ -10,7 +10,7 @@ namespace AgilAds.DAL.Audit
     public class AuditDataContext : DbContext
     {
         public AuditDataContext()
-            : base("AgilAdsConnection") { }
+            : base("AuditTrail") { }
         public DbSet<DbAudit> AuditTrail { get; set; }
     }
 }
