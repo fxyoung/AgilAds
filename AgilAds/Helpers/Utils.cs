@@ -24,6 +24,13 @@ namespace AgilAds.Helpers
         // Registration screen default values
         public const string defaultRole = "Dormant";
         public const int defaultRefId = -1;
+        public const int orgNameMax = 80;
+        public const int orgNameMin = 2;
+        public const string orgNameRegexPattern = "^[a-zA-Z][a-zA-Z0-9.@$!#%?_' ]*";
+        public const int bigBuffer = 2000;
+        public const int userNameMax = 25;
+        public const int userNameMin = 6;
+        public const string userNameRegexPattern = "^[a-zA-Z][a-zA-Z0-9.@$!#%?_]*";
     }
 
     public static class Startup

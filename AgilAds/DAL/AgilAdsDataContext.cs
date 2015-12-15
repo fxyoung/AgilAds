@@ -25,7 +25,9 @@ namespace AgilAds.DAL
         public virtual DbSet<Priv> Priv { get; set; }
         public virtual DbSet<Rep> Rep { get; set; }
 
-        public System.Data.Entity.DbSet<AgilAds.Models.Person> People { get; set; }
+        //public System.Data.Entity.DbSet<AgilAds.Models.Person> People { get; set; }
+        //public System.Data.Entity.DbSet<AgilAds.Models.Member> BusinessInfoes { get; set; }
+        //public System.Data.Entity.DbSet<AgilAds.Models.Institution> BusinessInfoes { get; set; }
 
         public int SaveChanges(string username)
         {
@@ -64,5 +66,9 @@ namespace AgilAds.DAL
             }
             return base.SaveChanges();
         }
+
+        public System.Data.Entity.DbSet<AgilAds.Models.Person> People { get; set; }
+
+        public System.Data.Entity.DbSet<AgilAds.Models.Member> BusinessInfoes { get; set; }
     }
 }

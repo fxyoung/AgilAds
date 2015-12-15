@@ -11,11 +11,35 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Identity.Fullname)
+            @Html.DisplayNameFor(model => model.OrganizationName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Identity.Fullname)
+            @Html.DisplayFor(model => model.OrganizationName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BankAcctNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BankAcctNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ArcSum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ArcSum)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Secret)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Secret)
         </dd>
 
         <dt>
@@ -43,19 +67,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Modified)
+            @Html.DisplayNameFor(model => model.FocalPoint.Fullname)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Modified)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ModifiedBy)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ModifiedBy)
+            @Html.DisplayFor(model => model.FocalPoint.Fullname)
         </dd>
 
     </dl>

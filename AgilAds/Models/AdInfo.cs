@@ -20,7 +20,7 @@ namespace AgilAds.Models
         public int MemberID { get; set; }
         [Required]
         public DateTime Expiration { get; set; }
-        [MaxLength(2000)]
+        [MaxLength(Helpers.Constants.bigBuffer)]
         public string DynamicResourceURL { get; set; }
         [Required]
         public reqStatus ReqStatus { get; set; }

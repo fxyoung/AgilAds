@@ -28,5 +28,31 @@ namespace AgilAds.Models
         public virtual ICollection<Institution> Institutions { get; set; }
         public virtual ICollection<Admin> Admins { get; set; }
         public virtual ICollection<RepPayment> Receipts { get; set; }
+
+        public Rep() { }
+        public Rep(string firstName, string lastName, string orgName)
+        {
+            var focal = new Person();
+            focal.Firstname = firstName;
+            focal.Lastname = lastName;
+            OrganizationName = orgName;
+            FocalPoint = focal;
+            Team = new List<Person>() { focal };
+        }
+    }
+    public class RepListAllView
+    {
+        public int id { get; set; }
+        public string Region { get; set; }
+        public string FocalPoint { get; set; }
+        public string Orgname { get; set; }
+
+        public RepListAllView(Rep template)
+        {
+            id = template.id;
+            Region = template.Region;
+            FocalPoint = template.FocalPoint.Username;
+            Orgname = template.OrganizationName;
+        }
     }
 }

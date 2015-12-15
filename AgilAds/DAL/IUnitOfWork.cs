@@ -9,11 +9,19 @@ namespace AgilAds.DAL
 {
     public interface IUnitOfWork
     {
-        GenericRepository<Admin> AdminRepository { get; }
         GenericRepository<Priv> PrivRepository { get; }
         GenericRepository<Rep> RepRepository { get; }
-        GenericRepository<Person> PersonRepository { get; }
-        GenericRepository<BusinessInfo> BusinessRepository { get; }
+
+        /// <summary>
+        /// Save method.
+        /// </summary>
+        void Save();
+        void Dispose();
+    }
+    public interface IUnitOfWorkAsync
+    {
+        GenericRepositoryAsync<Priv> PrivRepository { get; }
+        GenericRepositoryAsync<Rep> RepRepository { get; }
 
         /// <summary>
         /// Save method.

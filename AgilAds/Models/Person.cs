@@ -34,8 +34,8 @@ namespace AgilAds.Models
         [RegularExpression("^[a-zA-Z][a-zA-Z]*")]
         public string Lastname { get; set; }
         [Display(Name = "Username")]
-        [StringLength(25, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
-        [RegularExpression("^[a-zA-Z][a-zA-Z0-9.@$!#%?_]*")]
+        [StringLength(Helpers.Constants.userNameMax, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = Helpers.Constants.userNameMin)]
+        [RegularExpression(Helpers.Constants.userNameRegexPattern)]
         public string Username { get; set; }
 
         public virtual ICollection<PersonalContact> Contacts { get; set; }

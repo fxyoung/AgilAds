@@ -12,112 +12,124 @@ using AgilAds.Models;
 
 namespace AgilAds.Controllers
 {
-    public class RepsController : Controller
+    public class MemController : Controller
     {
         private AgilAdsDataContext db = new AgilAdsDataContext();
-
-        // GET: Reps
-        public async Task<ActionResult> Index()
+        private Rep rep;
+        private int repId;
+        public MemController()
         {
-            var businessInfoes = db.Rep.Include(r => r.FocalPoint);
-            return View(await businessInfoes.ToListAsync());
+            repId = 1;
+            GetRep();
+        }
+        private async void GetRep()
+        {
+            var task = db.Rep.FindAsync(repId);
+            rep = await task;
         }
 
-        // GET: Reps/Details/5
+        // GET: Mem
+        public ActionResult Index()
+        {
+            var members = rep.Members.ToList() ;
+            return View( members );
+        }
+
+        // GET: Mem/Details/5
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Rep rep = await db.Rep.FindAsync(id);
-            if (rep == null)
+            Member member = await db.BusinessInfoes.FindAsync(id);
+            if (member == null)
             {
                 return HttpNotFound();
             }
-            return View(rep);
+            return View(member);
         }
 
-        // GET: Reps/Create
+        // GET: Mem/Create
         public ActionResult Create()
         {
             ViewBag.FocalPointId = new SelectList(db.People, "id", "Fullname");
             return View();
         }
 
-        // POST: Reps/Create
+        // POST: Mem/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "id,OrganizationName,BankAcctNo,Modified,ModifiedBy,ArcSum,Secret,Region,FocalPointId,Fee,TaxRate")] Rep rep)
+        public async Task<ActionResult> Create([Bind(Include = "id,OrganizationName,BankAcctNo,ArcSum,Secret,FocalPointId,StaticMsg")] Member member)
         {
             if (ModelState.IsValid)
             {
-                db.Rep.Add(rep);
+                db.BusinessInfoes.Add(member);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.FocalPointId = new SelectList(db.People, "id", "Fullname", rep.FocalPointId);
-            return View(rep);
+            ViewBag.FocalPointId = new SelectList(db.People, "id", "Fullname", member.FocalPointId);
+            return View(member);
         }
 
-        // GET: Reps/Edit/5
+        // GET: Mem/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Rep rep = await db.Rep.FindAsync(id);
-            if (rep == null)
+            Member member = await db.BusinessInfoes.FindAsync(id);
+            if (member == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.FocalPointId = new SelectList(db.People, "id", "Fullname", rep.FocalPointId);
-            return View(rep);
+            ViewBag.FocalPointId = new SelectList(db.People, "id", "Fullname", member.FocalPointId);
+            return View(member);
         }
 
-        // POST: Reps/Edit/5
+        // POST: Mem/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "id,OrganizationName,BankAcctNo,Modified,ModifiedBy,ArcSum,Secret,Region,FocalPointId,Fee,TaxRate")] Rep rep)
+        public async Task<ActionResult> Edit([Bind(Include = "id,OrganizationName,BankAcctNo,ArcSum,Secret,FocalPointId,StaticMsg")] Member member)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(rep).State = EntityState.Modified;
+                db.Entry(member).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.FocalPointId = new SelectList(db.People, "id", "Fullname", rep.FocalPointId);
-            return View(rep);
+            ViewBag.FocalPointId = new SelectList(db.People, "id", "Fullname", member.FocalPointId);
+            return View(member);
         }
 
-        // GET: Reps/Delete/5
+        // GET: Mem/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Rep rep = await db.Rep.FindAsync(id);
-            if (rep == null)
+            Member member = await db.BusinessInfoes.FindAsync(id);
+            if (member == null)
             {
                 return HttpNotFound();
             }
-            return View(rep);
+            return View(member);
         }
 
-        // POST: Reps/Delete/5
+        // POST: Mem/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Rep rep = await db.Rep.FindAsync(id);
-            db.Rep.Remove(rep);
+            Member member = await db.BusinessInfoes.FindAsync(id);
+            db.BusinessInfoes.Remove(member);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }

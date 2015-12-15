@@ -202,14 +202,11 @@
     <Compile Include="BusinessServices\Administration\IRepServices.cs" />
     <Compile Include="BusinessServices\Administration\PrivServices.cs" />
     <Compile Include="BusinessServices\Administration\RepServices.cs" />
-    <Compile Include="BusinessServices\Utility\BusinessInfoServices.cs" />
-    <Compile Include="BusinessServices\Utility\IBusinessInfoServices.cs" />
-    <Compile Include="BusinessServices\Utility\IPersonServices.cs" />
-    <Compile Include="BusinessServices\Utility\PersonServices.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\RepsController.cs" />
+    <Compile Include="Controllers\MemController.cs" />
+    <Compile Include="Controllers\RepController.cs" />
     <Compile Include="DAL\AgilAdsDataContext.cs" />
     <Compile Include="DAL\Audit\AuditDataContext.cs" />
     <Compile Include="DAL\DbInit.cs" />
@@ -229,6 +226,14 @@
     <Compile Include="MigrationsAgilAdsDb\201512060228300_RemovedModifiedInfo.cs" />
     <Compile Include="MigrationsAgilAdsDb\201512060228300_RemovedModifiedInfo.Designer.cs">
       <DependentUpon>201512060228300_RemovedModifiedInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationsAgilAdsDb\201512072217570_OrgNameFormat.cs" />
+    <Compile Include="MigrationsAgilAdsDb\201512072217570_OrgNameFormat.Designer.cs">
+      <DependentUpon>201512072217570_OrgNameFormat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationsAgilAdsDb\201512140343444_NoBITable.cs" />
+    <Compile Include="MigrationsAgilAdsDb\201512140343444_NoBITable.Designer.cs">
+      <DependentUpon>201512140343444_NoBITable.cs</DependentUpon>
     </Compile>
     <Compile Include="MigrationsAgilAdsDb\Configuration.cs" />
     <Compile Include="MigrationsApplicationDb\201511252212224_Initial.cs" />
@@ -327,14 +332,15 @@
     <Content Include="Views\Rep\Details.cshtml" />
     <Content Include="Views\Rep\Edit.cshtml" />
     <Content Include="Views\Rep\Index.cshtml" />
-    <Content Include="Views\Reps\Create.cshtml" />
-    <Content Include="Views\Reps\Delete.cshtml" />
-    <Content Include="Views\Reps\Details.cshtml" />
-    <Content Include="Views\Reps\Edit.cshtml" />
-    <Content Include="Views\Reps\Index.cshtml" />
+    <Content Include="Views\Mem\Create.cshtml" />
+    <Content Include="Views\Mem\Delete.cshtml" />
+    <Content Include="Views\Mem\Details.cshtml" />
+    <Content Include="Views\Mem\Edit.cshtml" />
+    <Content Include="Views\Mem\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BusinessServices\User\" />
+    <Folder Include="BusinessServices\Utility\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -349,6 +355,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MigrationsAgilAdsDb\201512060228300_RemovedModifiedInfo.resx">
       <DependentUpon>201512060228300_RemovedModifiedInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationsAgilAdsDb\201512072217570_OrgNameFormat.resx">
+      <DependentUpon>201512072217570_OrgNameFormat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationsAgilAdsDb\201512140343444_NoBITable.resx">
+      <DependentUpon>201512140343444_NoBITable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MigrationsApplicationDb\201511252212224_Initial.resx">
       <DependentUpon>201511252212224_Initial.cs</DependentUpon>

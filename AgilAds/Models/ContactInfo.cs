@@ -17,7 +17,7 @@ namespace AgilAds.Models
         [Display(Name = "Contact Method")]
         public contactMethod Method { get; set; }
         [Required]
-        [MaxLength(2000)]
+        [MaxLength(Helpers.Constants.bigBuffer)]
         [Display(Name = "Contact Information")]
         public string Contact { get; set; }
     }

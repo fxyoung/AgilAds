@@ -11,7 +11,7 @@ namespace AgilAds.BusinessServices.Administration
     {
         Models.Rep GetRepById(int id);
         Models.Rep GetRepByName(string username);
-        IEnumerable<Models.Rep> GetAllReps();
+        IEnumerable<Models.RepListAllView> GetAllReps();
         IEnumerable<Rep> GetWithInclude(
             System.Linq.Expressions.Expression<Func<Rep, Boolean>> predicate, string[] include);
         int CreateRep(Models.Rep rep);

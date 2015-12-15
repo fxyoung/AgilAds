@@ -17,14 +17,9 @@ namespace AgilAds.Models
         public int FocalPointId { get; set; } //restricted to team members
         [ForeignKey("FocalPointId")]
         public virtual Person FocalPoint { get; set; }
-        //[Required]
-        //public int OrganizationId { get; set; }
-        //[ForeignKey("OrganizationId")]
-        //public virtual BusinessInfo Organization { get; set; }
         public string StaticMsg { get; set; }
 
-        public virtual ICollection<RepPayment> RepPayments { get; set; }
-        public virtual ICollection<InstitutionPayment> InstitutionPayments { get; set; }
+        public virtual ICollection<RepPayment> SURepPayments { get; set; }
         public virtual ICollection<AdInfo> Ads { get; set; }
     }
 }

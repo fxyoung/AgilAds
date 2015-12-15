@@ -15,8 +15,8 @@ namespace AgilAds.Models
         public int id { get; set; }
         [Required]
         [Display(Name = "Username")]
-        [StringLength(25, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
-        [RegularExpression("^[a-zA-Z][a-zA-Z0-9.@$!#%?_]*")]
+        [StringLength(Helpers.Constants.userNameMax, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = Helpers.Constants.userNameMin)]
+        [RegularExpression(Helpers.Constants.userNameRegexPattern)]
         public string Username { get; set; }
         [Required]
         [StringLength(25, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 2)]

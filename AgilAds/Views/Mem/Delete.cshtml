@@ -1,4 +1,4 @@
-﻿@model AgilAds.Models.Rep
+﻿@model AgilAds.Models.Member
 
 @{
     ViewBag.Title = "Delete";
@@ -8,7 +8,7 @@
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Rep</h4>
+    <h4>Member</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -28,22 +28,6 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Modified)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Modified)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ModifiedBy)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ModifiedBy)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.ArcSum)
         </dt>
 
@@ -60,27 +44,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Region)
+            @Html.DisplayNameFor(model => model.StaticMsg)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Region)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Fee)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Fee)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TaxRate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TaxRate)
+            @Html.DisplayFor(model => model.StaticMsg)
         </dd>
 
         <dt>

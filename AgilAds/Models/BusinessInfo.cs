@@ -8,17 +8,16 @@ using System.Web.Mvc;
 
 namespace AgilAds.Models
 {
-    [Table("BusinessInfoes")]
     public class BusinessInfo
     {
         [Key]
         public int id { get; set; }
         [Required]
         [Display(Name = "Organization Name")]
-        [StringLength(35, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 2)]
-        [RegularExpression("^[a-zA-Z][a-zA-Z0-9.@$!#%?_]*")]
+        [StringLength(Helpers.Constants.orgNameMax, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = Helpers.Constants.orgNameMin)]
+        [RegularExpression(Helpers.Constants.orgNameRegexPattern)]
         public string OrganizationName { get; set; }
-        [MaxLength(2000)]
+        [MaxLength(Helpers.Constants.bigBuffer)]
         [Display(Name = "Bank Account Number")]
         public string BankAcctNo { get; set; }
 

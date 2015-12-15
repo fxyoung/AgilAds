@@ -24,7 +24,7 @@ namespace AgilAds.BusinessServices.Administration
 
         public Rep GetRepByName(string username)
         {
-            return _uow.RepRepository.GetFunc(r => r.FocalPoint.Fullname.Equals(username));
+            return _uow.RepRepository.GetSingleOrDefault(r => r.FocalPoint.Username.Equals(username));
         }
 
         public IEnumerable<Rep> GetWithInclude(
@@ -34,9 +34,16 @@ namespace AgilAds.BusinessServices.Administration
             return _uow.RepRepository.GetWithInclude(predicate, include);
         }
 
-        public IEnumerable<Rep> GetAllReps()
+        public IEnumerable<RepListAllView> GetAllReps()
         {
-            return _uow.RepRepository.GetWithInclude(null, include);
+            var subclasses = new string[] { "FocalPoint" };
+            var l = _uow.RepRepository.GetWithInclude(null, subclasses);
+            var r = new List<RepListAllView>();
+            foreach(var viewEntry in l)
+            {
+                r.Add(new RepListAllView(viewEntry));
+            }
+            return r;
         }
 
         public int CreateRep(Rep rep)

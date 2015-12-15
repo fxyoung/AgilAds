@@ -17,7 +17,6 @@ namespace AgilAds.DAL
         System.Data.Entity.DropCreateDatabaseAlways<AgilAdsDataContext>
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-        static ApplicationUserManager userManager;
 
         protected override void Seed(AgilAdsDataContext context)
         {
@@ -71,7 +70,8 @@ namespace AgilAds.DAL
                 Firstname = "Al", 
                 Lastname = "Green",
                 Contacts = new List<PersonalContact>(),
-                Username = "algreen" },"RA");
+                Username = "algreen" 
+            },"RA");
             testdata.addPersonalContact(repId, teamBurien1, new PersonalContact()
             {
                 Contact = "206.555.1122",
@@ -82,32 +82,32 @@ namespace AgilAds.DAL
                 Contact = "agilads@primeSites.com",
                 Method = ContactInfo.contactMethod.email
             });
-            var bi = new BusinessInfo() { OrganizationName = "Als_Emporium" };
+            var bi = new BusinessInfo() { OrganizationName = "Al's Emporium" };
             var pc = new List<PersonalContact>() { new PersonalContact(){ 
                             Method=AgilAds.Models.ContactInfo.contactMethod.email, 
                             Contact="foo@bar.com"}};
             p = new Person(){Firstname="Al", Lastname="Johnstone", Contacts=pc, Username="aljohnstone"};
             var memAl = testdata.addMemberOrg(repId, p, bi);
-            bi = new BusinessInfo() { OrganizationName = "Hot_Shot_Beauty_Salon" };
+            bi = new BusinessInfo() { OrganizationName = "Hot Shot Beauty Salon" };
             pc = new List<PersonalContact>() { new PersonalContact(){ 
                             Method=AgilAds.Models.ContactInfo.contactMethod.phone, 
                             Contact="1-800-555-1212"}};
             p = new Person() { Firstname = "Mabel", Lastname = "Smith", Contacts = pc, Username="mabelsmith" };
             var memMabel = testdata.addMemberOrg(repId, p, bi);
-            bi = new BusinessInfo() { OrganizationName = "The_Hat_Store" };
+            bi = new BusinessInfo() { OrganizationName = "The Hat Store" };
             pc = new List<PersonalContact>() { new PersonalContact(){ 
                             Method=AgilAds.Models.ContactInfo.contactMethod.email, 
                             Contact="missy@hats.com"}};
             p = new Person() { Firstname = "Missy", Lastname = "Fine", Contacts = pc, Username="missyfine" };
             var memMissy = testdata.addMemberOrg(repId, p, bi);
-            bi = new BusinessInfo() { OrganizationName = "Sue_Hu_Pool_Hall" };
+            bi = new BusinessInfo() { OrganizationName = "Sue Hu's Pool Hall" };
             pc = new List<PersonalContact>() { new PersonalContact(){ 
                             Method=AgilAds.Models.ContactInfo.contactMethod.sms, 
                             Contact="1-888-555-1234"}};
             p = new Person() { Firstname = "Sue", Lastname = "Hu", Contacts = pc };
             p.Username = (p.Firstname + "_" + p.Lastname).ToLower();
             var memSue = testdata.addMemberOrg(repId, p, bi);
-            bi = new BusinessInfo() { OrganizationName = "Jakes_Auto_Repair" };
+            bi = new BusinessInfo() { OrganizationName = "Jake's Auto Repair" };
             pc = new List<PersonalContact>() { new PersonalContact(){ 
                             Method=AgilAds.Models.ContactInfo.contactMethod.email, 
                             Contact="jake@memphis.com"}};
@@ -117,7 +117,7 @@ namespace AgilAds.DAL
             var bc = new List<BusinessContact>(){ new BusinessContact(){
                             Method=AgilAds.Models.ContactInfo.contactMethod.address, 
                             Contact="3233 W 47th Blvd, Seahurst, Wa 98145"}};
-            bi = new BusinessInfo() { OrganizationName = "Burien_Chamber_of_Commerce", Contacts = bc };
+            bi = new BusinessInfo() { OrganizationName = "Burien Chamber of Commerce", Contacts = bc };
             pc = new List<PersonalContact>() { new PersonalContact(){ 
                             Method=AgilAds.Models.ContactInfo.contactMethod.phone, 
                             Contact="206--555-4321 ext 4423"}};
@@ -138,7 +138,7 @@ namespace AgilAds.DAL
                                 Contact="206-555-9876"
                             }
             };
-            bi = new BusinessInfo() { OrganizationName = "South_Seattle_Community_College_School_of_Business", Contacts = bc };
+            bi = new BusinessInfo() { OrganizationName = "South Seattle Community College School of Business", Contacts = bc };
             pc = new List<PersonalContact>() { new PersonalContact(){ 
                             Method=AgilAds.Models.ContactInfo.contactMethod.phone, 
                             Contact="206-555-2805 ext 23"}};
@@ -222,7 +222,7 @@ namespace AgilAds.DAL
                     re.Institutions = new List<Institution>();
                     re.Team.Add(rep);
                     re.FocalPoint = rep;
-                    re.OrganizationName = org.OrganizationName;
+                    re.OrganizationName = truncateOrgName(org.OrganizationName);
                     _context.Rep.Add(re);
                     SaveChanges(_context);
                     retval = re.id;
@@ -244,7 +244,7 @@ namespace AgilAds.DAL
                 var rep = _context.Rep.FirstOrDefault(r => r.id.Equals(repId));
                 if (rep != null)
                 {
-                    var person = _context.People.FirstOrDefault(p => p.id.Equals(personId));
+                    var person = rep.Team.FirstOrDefault(p => p.id.Equals(personId));
                     if (person != null && person.BusinessInfoId.Equals(rep.id))
                     {
                         person.Contacts.Add(pc);
@@ -276,8 +276,7 @@ namespace AgilAds.DAL
                     mem.Team = new List<Person>();
                     mem.Team.Add(focal);
                     mem.FocalPoint = focal;
-                    //mem.FocalPointId = focal.id;
-                    mem.OrganizationName = org.OrganizationName;
+                    mem.OrganizationName = truncateOrgName(org.OrganizationName);
                     rep.Members.Add(mem);
                     SaveChanges(_context);
                     retval = mem.id;
@@ -313,15 +312,18 @@ namespace AgilAds.DAL
                     ins.Team = new List<Person>();
                     ins.Team.Add(focal);
                     ins.FocalPoint = focal;
-                    var l = org.OrganizationName.Length;
-                    if (l > 35) l = 35;
-                    ins.OrganizationName = org.OrganizationName.Substring(0,l);
+                    ins.OrganizationName = truncateOrgName(org.OrganizationName);
                     rep.Institutions.Add(ins);
                     SaveChanges(_context);
                     retval = ins.id;
                     pushUser(focal, "Institution");
                 }
                 return retval;
+            }
+            string truncateOrgName (string orgName)
+            {
+                if (orgName.Length < Helpers.Constants.orgNameMax) return orgName;
+                else return orgName.Substring(0, Helpers.Constants.orgNameMax);
             }
             public int addInsTeamMember(int repId, int insId, Person member)
             {
