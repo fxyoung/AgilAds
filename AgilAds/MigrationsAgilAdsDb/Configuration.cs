@@ -9,7 +9,7 @@ namespace AgilAds.MigrationsAgilAdsDb
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationsEnabled = false;
             MigrationsDirectory = @"MigrationsAgilAdsDb";
         }
 

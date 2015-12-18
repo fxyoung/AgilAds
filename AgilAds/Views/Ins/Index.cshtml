@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AgilAds.Models.Rep>
+﻿@model IEnumerable<AgilAds.Models.Institution>
 
 @{
     ViewBag.Title = "Index";
@@ -12,16 +12,10 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Parent.OrganizationName)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.OrganizationName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.BankAcctNo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FocalPointId)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.ArcSum)
@@ -30,13 +24,10 @@
             @Html.DisplayNameFor(model => model.Secret)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Region)
+            @Html.DisplayNameFor(model => model.MonthlyAdFee)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Fee)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TaxRate)
+            @Html.DisplayNameFor(model => model.FocalPoint.Fullname)
         </th>
         <th></th>
     </tr>
@@ -44,16 +35,10 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Parent.OrganizationName)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.OrganizationName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.BankAcctNo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FocalPointId)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.ArcSum)
@@ -62,13 +47,10 @@
             @Html.DisplayFor(modelItem => item.Secret)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Region)
+            @Html.DisplayFor(modelItem => item.MonthlyAdFee)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Fee)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TaxRate)
+            @Html.DisplayFor(modelItem => item.FocalPoint.Fullname)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.id }) |

@@ -221,7 +221,7 @@ namespace AgilAds.DAL
                     re.Members = new List<Member>();
                     re.Institutions = new List<Institution>();
                     re.Team.Add(rep);
-                    re.FocalPoint = rep;
+                    //re.FocalPoint = rep;
                     re.OrganizationName = truncateOrgName(org.OrganizationName);
                     _context.Rep.Add(re);
                     SaveChanges(_context);
@@ -275,7 +275,7 @@ namespace AgilAds.DAL
                     mem.Contacts = new List<BusinessContact>();
                     mem.Team = new List<Person>();
                     mem.Team.Add(focal);
-                    mem.FocalPoint = focal;
+                    //mem.FocalPoint = focal;
                     mem.OrganizationName = truncateOrgName(org.OrganizationName);
                     rep.Members.Add(mem);
                     SaveChanges(_context);
@@ -311,7 +311,7 @@ namespace AgilAds.DAL
                     ins.Contacts = new List<BusinessContact>();
                     ins.Team = new List<Person>();
                     ins.Team.Add(focal);
-                    ins.FocalPoint = focal;
+                    //ins.FocalPoint = focal;
                     ins.OrganizationName = truncateOrgName(org.OrganizationName);
                     rep.Institutions.Add(ins);
                     SaveChanges(_context);

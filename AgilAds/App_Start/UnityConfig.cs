@@ -38,7 +38,7 @@ namespace AgilAds.App_Start
 
             // TODO: Register your types here
             // container.RegisterType<IProductRepository, ProductRepository>();
-            container.RegisterType<IUnitOfWork, UnitOfWork>();
+            container.RegisterType<IUnitOfWorkAsync, UnitOfWorkAsync>();
         }
     }
 }

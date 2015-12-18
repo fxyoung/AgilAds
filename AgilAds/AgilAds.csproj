@@ -202,11 +202,11 @@
     <Compile Include="BusinessServices\Administration\IRepServices.cs" />
     <Compile Include="BusinessServices\Administration\PrivServices.cs" />
     <Compile Include="BusinessServices\Administration\RepServices.cs" />
+    <Compile Include="BusinessServices\User\IMemServices.cs" />
+    <Compile Include="BusinessServices\User\MemServices.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\MemController.cs" />
-    <Compile Include="Controllers\RepController.cs" />
     <Compile Include="DAL\AgilAdsDataContext.cs" />
     <Compile Include="DAL\Audit\AuditDataContext.cs" />
     <Compile Include="DAL\DbInit.cs" />
@@ -219,21 +219,9 @@
     <Compile Include="Helpers\ControllerExtensions.cs" />
     <Compile Include="Helpers\ReqBaseController.cs" />
     <Compile Include="Helpers\Utils.cs" />
-    <Compile Include="MigrationsAgilAdsDb\201512032308013_Initial.cs" />
-    <Compile Include="MigrationsAgilAdsDb\201512032308013_Initial.Designer.cs">
-      <DependentUpon>201512032308013_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MigrationsAgilAdsDb\201512060228300_RemovedModifiedInfo.cs" />
-    <Compile Include="MigrationsAgilAdsDb\201512060228300_RemovedModifiedInfo.Designer.cs">
-      <DependentUpon>201512060228300_RemovedModifiedInfo.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MigrationsAgilAdsDb\201512072217570_OrgNameFormat.cs" />
-    <Compile Include="MigrationsAgilAdsDb\201512072217570_OrgNameFormat.Designer.cs">
-      <DependentUpon>201512072217570_OrgNameFormat.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MigrationsAgilAdsDb\201512140343444_NoBITable.cs" />
-    <Compile Include="MigrationsAgilAdsDb\201512140343444_NoBITable.Designer.cs">
-      <DependentUpon>201512140343444_NoBITable.cs</DependentUpon>
+    <Compile Include="MigrationsAgilAdsDb\201512180140525_Initial.cs" />
+    <Compile Include="MigrationsAgilAdsDb\201512180140525_Initial.Designer.cs">
+      <DependentUpon>201512180140525_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="MigrationsAgilAdsDb\Configuration.cs" />
     <Compile Include="MigrationsApplicationDb\201511252212224_Initial.cs" />
@@ -264,10 +252,15 @@
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\Priv.cs" />
     <Compile Include="Models\Rep.cs" />
+    <Compile Include="Models\SharedEntityCreationModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\AgilAdsData.mdf" />
+    <Content Include="App_Data\AgilAdsData_log.ldf">
+      <DependentUpon>AgilAdsData.mdf</DependentUpon>
+    </Content>
     <Content Include="App_Data\AuditTrailData.mdf" />
     <Content Include="App_Data\AuditTrailData_log.ldf">
       <DependentUpon>AuditTrailData.mdf</DependentUpon>
@@ -337,9 +330,24 @@
     <Content Include="Views\Mem\Details.cshtml" />
     <Content Include="Views\Mem\Edit.cshtml" />
     <Content Include="Views\Mem\Index.cshtml" />
+    <Content Include="Views\Shared\_Create.cshtml" />
+    <Content Include="Views\Ins\Create.cshtml" />
+    <Content Include="Views\Ins\Delete.cshtml" />
+    <Content Include="Views\Ins\Details.cshtml" />
+    <Content Include="Views\Ins\Edit.cshtml" />
+    <Content Include="Views\Ins\Index.cshtml" />
+    <Content Include="Views\Members\Create.cshtml" />
+    <Content Include="Views\Members\Delete.cshtml" />
+    <Content Include="Views\Members\Details.cshtml" />
+    <Content Include="Views\Members\Edit.cshtml" />
+    <Content Include="Views\Members\Index.cshtml" />
+    <Content Include="Views\Reps\Create.cshtml" />
+    <Content Include="Views\Reps\Delete.cshtml" />
+    <Content Include="Views\Reps\Details.cshtml" />
+    <Content Include="Views\Reps\Edit.cshtml" />
+    <Content Include="Views\Reps\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="BusinessServices\User\" />
     <Folder Include="BusinessServices\Utility\" />
   </ItemGroup>
   <ItemGroup>
@@ -350,17 +358,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="MigrationsAgilAdsDb\201512032308013_Initial.resx">
-      <DependentUpon>201512032308013_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MigrationsAgilAdsDb\201512060228300_RemovedModifiedInfo.resx">
-      <DependentUpon>201512060228300_RemovedModifiedInfo.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MigrationsAgilAdsDb\201512072217570_OrgNameFormat.resx">
-      <DependentUpon>201512072217570_OrgNameFormat.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MigrationsAgilAdsDb\201512140343444_NoBITable.resx">
-      <DependentUpon>201512140343444_NoBITable.cs</DependentUpon>
+    <EmbeddedResource Include="MigrationsAgilAdsDb\201512180140525_Initial.resx">
+      <DependentUpon>201512180140525_Initial.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MigrationsApplicationDb\201511252212224_Initial.resx">
       <DependentUpon>201511252212224_Initial.cs</DependentUpon>

@@ -8,35 +8,57 @@ using System.Web.Mvc;
 
 namespace AgilAds.Models
 {
-    [Table("Reps")]
     public class Rep : BusinessInfo
     {
         //[Key]
         //public int id { get; set; }
-        [StringLength(25, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 2)]
-        [RegularExpression("^[a-zA-Z][a-zA-Z0-9 ]*")]
+        [StringLength(Helpers.Constants.regionNameMax, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = Helpers.Constants.regionNameMin)]
+        [RegularExpression(Helpers.Constants.regionNameRegexPattern)]
         public string Region { get; set; }
-        [Required]
-        public int FocalPointId { get; set; } //restricted to team members
         [DataType(DataType.Currency)]
         public double Fee { get; set; }
         public double TaxRate { get; set; }
         
-        [ForeignKey("FocalPointId")]
-        public virtual Person FocalPoint { get; set; }
         public virtual ICollection<Member> Members { get; set; }
         public virtual ICollection<Institution> Institutions { get; set; }
         public virtual ICollection<Admin> Admins { get; set; }
         public virtual ICollection<RepPayment> Receipts { get; set; }
 
         public Rep() { }
-        public Rep(string firstName, string lastName, string orgName)
+        public Rep(RepCreateView template)
         {
             var focal = new Person();
-            focal.Firstname = firstName;
-            focal.Lastname = lastName;
-            OrganizationName = orgName;
-            FocalPoint = focal;
+            focal.Firstname = template.FocalFirstname;
+            focal.Lastname = template.FocalLastname ;
+            focal.Username = template.Username;
+            if (!String.IsNullOrWhiteSpace(template.Username))
+            {
+                Helpers.Startup.AddUserRole(
+                    template.Username, 
+                    "Representative", 
+                    throwIfUserNotFound: true);
+            }
+            focal.Contacts = new List<PersonalContact>();
+            if (!String.IsNullOrWhiteSpace(template.FocalContact))
+            {
+                var c = new PersonalContact();
+                c.Contact = template.FocalContact;
+                c.Method = template.FocalContactMethod;
+                focal.Contacts.Add(c);
+            }
+            OrganizationName = template.OrganizationName;
+            Contacts = new List<BusinessContact>();
+            if (!String.IsNullOrWhiteSpace(template.OrganizationContact))
+            {
+                var c = new BusinessContact();
+                c.Contact = template.FocalContact;
+                c.Method = template.FocalContactMethod;
+                Contacts.Add(c);
+            }
+            Fee = template.Fee;
+            TaxRate = template.TaxRate;
+            Region = template.Region;
+            // = focal;
             Team = new List<Person>() { focal };
         }
     }
@@ -51,8 +73,18 @@ namespace AgilAds.Models
         {
             id = template.id;
             Region = template.Region;
-            FocalPoint = template.FocalPoint.Username;
+            FocalPoint = null; ;// template.FocalPoint.Username;
             Orgname = template.OrganizationName;
         }
+    }
+
+    public class RepCreateView : SharedEntityCreationModel
+    {
+        [StringLength(Helpers.Constants.regionNameMax, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = Helpers.Constants.regionNameMin)]
+        [RegularExpression(Helpers.Constants.regionNameRegexPattern)]
+        public string Region { get; set; }
+        [DataType(DataType.Currency)]
+        public double Fee { get; set; }
+        public double TaxRate { get; set; }
     }
 }

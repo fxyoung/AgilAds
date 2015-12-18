@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace AgilAds.DAL
@@ -163,7 +164,7 @@ namespace AgilAds.DAL
         /// <summary>
         /// Save method.
         /// </summary>
-        public async void Save()
+        public async Task Save()
         {
             try
             {

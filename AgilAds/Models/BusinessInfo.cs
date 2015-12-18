@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace AgilAds.Models
 {
+    [Table("BusinessInfoes")]
     public class BusinessInfo
     {
         [Key]
@@ -20,11 +21,17 @@ namespace AgilAds.Models
         [MaxLength(Helpers.Constants.bigBuffer)]
         [Display(Name = "Bank Account Number")]
         public string BankAcctNo { get; set; }
+        [Required]
+        public int FocalPointId { get; set; } //restricted to team members
 
         [HiddenInput(DisplayValue = false)]
         public byte[] ArcSum { get; set; }  //checksum
         [HiddenInput(DisplayValue = false)]
         public byte[] Secret { get; set; }  //key
+
+        public int? ParentId { get; set; }
+        [ForeignKey("ParentId")]
+        public BusinessInfo Parent { get; set; }
 
         public virtual ICollection<Person> Team { get; set; }
         public virtual ICollection<BusinessContact> Contacts { get; set; }

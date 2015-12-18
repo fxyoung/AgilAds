@@ -25,13 +25,13 @@ namespace AgilAds.Models
         }
         [Required]
         [Display(Name = "First Name")]
-        [StringLength(25, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 2)]
-        [RegularExpression("^[a-zA-Z][a-zA-Z]*")]
+        [StringLength(Helpers.Constants.indivNameMax, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = Helpers.Constants.indivNameMin)]
+        [RegularExpression(Helpers.Constants.indivNameRegexPattern)]
         public string Firstname { get; set; }
         [Required]
         [Display(Name = "Last Name")]
-        [StringLength(25, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 2)]
-        [RegularExpression("^[a-zA-Z][a-zA-Z]*")]
+        [StringLength(Helpers.Constants.indivNameMax, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = Helpers.Constants.indivNameMin)]
+        [RegularExpression(Helpers.Constants.indivNameRegexPattern)]
         public string Lastname { get; set; }
         [Display(Name = "Username")]
         [StringLength(Helpers.Constants.userNameMax, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = Helpers.Constants.userNameMin)]

@@ -26,7 +26,7 @@ namespace AgilAds.DAL
         /// <summary>
         /// Save method.
         /// </summary>
-        void Save();
+        Task Save();
         void Dispose();
     }
 }

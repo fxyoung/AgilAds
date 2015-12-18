@@ -66,6 +66,7 @@ namespace AgilAds.DAL
             if (entityToUpdate == null)
                 return;
 
+            DbSet.Attach(entityToUpdate);
             _context.Entry(entityToUpdate).CurrentValues.SetValues(entityToUpdate);
         }
     }
@@ -91,7 +92,7 @@ namespace AgilAds.DAL
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public virtual async Task<TEntity> GetByIDAsync(object id)
+        public virtual async Task<TEntity> GetByID(object id)
         {
             return await DbSet.FindAsync(id);
         }
@@ -100,7 +101,7 @@ namespace AgilAds.DAL
         /// generic method to fetch all the records from db
         /// </summary>
         /// <returns></returns>
-        public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
+        public virtual async Task<IEnumerable<TEntity>> GetAll()
         {
             return await DbSet.ToListAsync();
         }
@@ -110,7 +111,7 @@ namespace AgilAds.DAL
         /// </summary>
         /// <param name="where"></param>
         /// <returns></returns>
-        public virtual async Task<TEntity> GetSingleOrDefaultAsync(Expression<Func<TEntity, Boolean>> where)
+        public virtual async Task<TEntity> GetSingleOrDefault(Expression<Func<TEntity, Boolean>> where)
         {
             return await DbSet.SingleOrDefaultAsync(where);
         }
@@ -120,7 +121,7 @@ namespace AgilAds.DAL
         /// </summary>
         /// <param name="where"></param>
         /// <returns></returns>
-        public virtual async Task<IEnumerable<TEntity>> GetManyAsync(Expression<Func<TEntity, bool>> where)
+        public virtual async Task<IEnumerable<TEntity>> GetMany(Expression<Func<TEntity, bool>> where)
         {
             return await DbSet.Where(where).ToListAsync();
         }
@@ -131,14 +132,7 @@ namespace AgilAds.DAL
         /// <param name="predicate"></param>
         /// <param name="include"></param>
         /// <returns></returns>
-        public virtual IQueryable<TEntity> GetWithInclude(System.Linq.Expressions.Expression<Func<TEntity, bool>> predicate, params string[] include)
-        {
-            IQueryable<TEntity> query = this.DbSet;
-            query = include.Aggregate(query, (current, inc) => current.Include(inc));
-            if (predicate == null) return query;
-            return query.Where(predicate);
-        }
-        public virtual async Task<ICollection<TEntity>> GetWithIncludeAsync(System.Linq.Expressions.Expression<Func<TEntity, bool>> predicate, params string[] include)
+        public virtual async Task<ICollection<TEntity>> GetWithInclude(System.Linq.Expressions.Expression<Func<TEntity, bool>> predicate, params string[] include)
         {
             IQueryable<TEntity> query = this.DbSet;
             query = include.Aggregate(query, (current, inc) => current.Include(inc));
@@ -151,7 +145,7 @@ namespace AgilAds.DAL
         /// </summary>
         /// <param name="primaryKey"></param>
         /// <returns></returns>
-        public virtual async Task<bool> ExistsAsync(object primaryKey)
+        public virtual async Task<bool> Exists(object primaryKey)
         {
             return await DbSet.FindAsync(primaryKey) != null;
         }

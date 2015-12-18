@@ -31,10 +31,29 @@ namespace AgilAds.Helpers
         public const int userNameMax = 25;
         public const int userNameMin = 6;
         public const string userNameRegexPattern = "^[a-zA-Z][a-zA-Z0-9.@$!#%?_]*";
+        public const int regionNameMax = 25;
+        public const int regionNameMin = 2;
+        public const string regionNameRegexPattern = "^[a-zA-Z][a-zA-Z0-9 ]*";
+        public const int indivNameMax = 25;
+        public const int indivNameMin = 2;
+        public const string indivNameRegexPattern = "^[a-zA-Z][a-zA-Z]*";
     }
 
     public static class Startup
     {
+        private static ApplicationUserManager _userManager = null;
+        private static ApplicationUserManager userManager
+        {
+            get
+            {
+                if (_userManager == null)
+                {
+                    _userManager = HttpContext.Current.GetOwinContext()
+                    .GetUserManager<ApplicationUserManager>();
+                }
+                return _userManager;
+            }
+        }
         public static List<string> rolesMaster { get; private set; }
         public static List<string> OwnerRoles { get; private set; }
         public static List<string> AdminRoles { get; private set; }
@@ -83,9 +102,9 @@ namespace AgilAds.Helpers
             string password = settings[startupVar.UserPassword];
             string roleName = settings[startupVar.UserRole];
 
-            ApplicationUserManager userManager = HttpContext
-            .Current.GetOwinContext()
-            .GetUserManager<ApplicationUserManager>();
+            // userManager = HttpContext
+            //.Current.GetOwinContext()
+            //.GetUserManager<ApplicationUserManager>();
 
             //Create roles that do not yet exist
             var reqRoles = settings[startupVar.Rolenames]
@@ -120,6 +139,20 @@ namespace AgilAds.Helpers
                 var result = userManager.AddToRole(user.Id, roleName);
             }
             defaultUser = superUser;
+        }
+        public static void AddUserRole(string username, string roleName, bool throwIfUserNotFound = false)
+        {
+            // Add user rolename if not already added
+            var user = userManager.FindByName(username);
+            if (user != null)
+            {
+                var rolesForUser = userManager.GetRoles(user.Id);
+                if (!rolesForUser.Contains(roleName))
+                {
+                    var result = userManager.AddToRole(user.Id, roleName);
+                }
+            }
+            else if (throwIfUserNotFound) throw new ArgumentException("User " + username + " not defined");
         }
     }
 
