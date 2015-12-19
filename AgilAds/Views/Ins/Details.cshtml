@@ -11,6 +11,14 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            @Html.DisplayNameFor(model => model.Parent.OrganizationName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Parent.OrganizationName)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.OrganizationName)
         </dt>
 
@@ -24,6 +32,14 @@
 
         <dd>
             @Html.DisplayFor(model => model.BankAcctNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FocalPointId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FocalPointId)
         </dd>
 
         <dt>
@@ -48,14 +64,6 @@
 
         <dd>
             @Html.DisplayFor(model => model.MonthlyAdFee)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FocalPoint.Fullname)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FocalPoint.Fullname)
         </dd>
 
     </dl>

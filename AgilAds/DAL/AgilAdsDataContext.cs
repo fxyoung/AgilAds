@@ -14,20 +14,14 @@ namespace AgilAds.DAL
     {
         public AgilAdsDataContext()
             : base("AgilAdsConnection") { }
-        //public virtual DbSet<AdInfo> AdInfo { get; set; }
-        //public virtual DbSet<Admin> Admin { get; set; }
-        //public virtual DbSet<BusinessInfo> BusinessInfo { get; set; }
-        //public virtual DbSet<BusinessInfoContactInfo> BusinessInfoContactInfo { get; set; }
-        //public virtual DbSet<PersonContactInfo> PersonContactInfo { get; set; }
-        //public virtual DbSet<Institution> Institution { get; set; }
-        //public virtual DbSet<Member> Member { get; set; }
-        //public virtual DbSet<Person> Person { get; set; }
-        public virtual DbSet<Priv> Priv { get; set; }
-        public virtual DbSet<Rep> Rep { get; set; }
-
-        //public System.Data.Entity.DbSet<AgilAds.Models.Person> People { get; set; }
-        //public System.Data.Entity.DbSet<AgilAds.Models.Member> BusinessInfoes { get; set; }
-        //public System.Data.Entity.DbSet<AgilAds.Models.Institution> BusinessInfoes { get; set; }
+        public virtual DbSet<AdInfo> AdInfoes { get; set; }
+        public virtual DbSet<Admin> Admins { get; set; }
+        public virtual DbSet<BusinessInfo> BusinessInfoes { get; set; }
+        public virtual DbSet<Institution> Institutions { get; set; }
+        public virtual DbSet<Member> Members { get; set; }
+        public virtual DbSet<Person> People { get; set; }
+        public virtual DbSet<Priv> Privs { get; set; }
+        public virtual DbSet<Rep> Reps { get; set; }
 
         public int SaveChanges(string username)
         {
@@ -66,10 +60,5 @@ namespace AgilAds.DAL
             }
             return base.SaveChanges();
         }
-
-        public System.Data.Entity.DbSet<AgilAds.Models.Person> People { get; set; }
-        public System.Data.Entity.DbSet<AgilAds.Models.BusinessInfo> BusinessInfoes { get; set; }
-        public System.Data.Entity.DbSet<AgilAds.Models.Member> Members { get; set; }
-        public System.Data.Entity.DbSet<AgilAds.Models.Institution> Institutions { get; set; }
     }
 }

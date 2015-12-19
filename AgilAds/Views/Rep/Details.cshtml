@@ -11,14 +11,6 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Parent.OrganizationName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Parent.OrganizationName)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.OrganizationName)
         </dt>
 
@@ -35,11 +27,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.FocalPointId)
+            FocalPoint
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.FocalPointId)
+            @AgilAds.Helpers.Utils.FindNameOf(Model.FocalPointId)
         </dd>
 
         <dt>

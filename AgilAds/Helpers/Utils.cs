@@ -14,6 +14,7 @@ namespace AgilAds.Helpers
     using System.Linq;
     using System.Web;
     using Microsoft.AspNet.Identity.EntityFramework;
+    using AgilAds.DAL;
     public static class Constants
     {
         // rolename constants 
@@ -158,6 +159,16 @@ namespace AgilAds.Helpers
 
     public static class Utils
     {
+        public static string FindNameOf(int id)
+        {
+            var name = "not defined";
+            using (var db = new AgilAdsDataContext())
+            {
+                var fp = db.People.Find(id);
+                if (fp != null) name = fp.Fullname;
+            }
+            return name;
+        }
         public static List<System.Web.Mvc.SelectListItem> MakeSelectList(string[] e,
             string selectedItem = null)
         {

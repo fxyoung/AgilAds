@@ -221,9 +221,10 @@ namespace AgilAds.DAL
                     re.Members = new List<Member>();
                     re.Institutions = new List<Institution>();
                     re.Team.Add(rep);
-                    //re.FocalPoint = rep;
                     re.OrganizationName = truncateOrgName(org.OrganizationName);
-                    _context.Rep.Add(re);
+                    _context.Reps.Add(re);
+                    SaveChanges(_context);
+                    re.FocalPointId = rep.id;
                     SaveChanges(_context);
                     retval = re.id;
                     pushUser(rep, "Representative");
@@ -232,7 +233,7 @@ namespace AgilAds.DAL
             }
             public void addBusinessContact(int repId, BusinessContact bc)
             {
-                var rep = _context.Rep.FirstOrDefault(r => r.id.Equals(repId));
+                var rep = _context.Reps.FirstOrDefault(r => r.id.Equals(repId));
                 if (rep != null)
                 {
                     rep.Contacts.Add(bc);
@@ -241,7 +242,7 @@ namespace AgilAds.DAL
             }
             public void addPersonalContact(int repId, int personId, PersonalContact pc)
             {
-                var rep = _context.Rep.FirstOrDefault(r => r.id.Equals(repId));
+                var rep = _context.Reps.FirstOrDefault(r => r.id.Equals(repId));
                 if (rep != null)
                 {
                     var person = rep.Team.FirstOrDefault(p => p.id.Equals(personId));
@@ -255,7 +256,7 @@ namespace AgilAds.DAL
             public int addTeamMember(int repId, Person member, string role)
             {
                 int retval = -1;
-                var rep = _context.Rep.FirstOrDefault(r => r.id.Equals(repId));
+                var rep = _context.Reps.FirstOrDefault(r => r.id.Equals(repId));
                 if (rep != null)
                 {
                     rep.Team.Add(member);
@@ -268,16 +269,17 @@ namespace AgilAds.DAL
             public int addMemberOrg(int repId, Person focal, BusinessInfo org)
             {
                 int retval = -1;
-                var rep = _context.Rep.FirstOrDefault(r => r.id.Equals(repId));
+                var rep = _context.Reps.FirstOrDefault(r => r.id.Equals(repId));
                 if (rep != null)
                 {
                     var mem = new Member();
                     mem.Contacts = new List<BusinessContact>();
                     mem.Team = new List<Person>();
                     mem.Team.Add(focal);
-                    //mem.FocalPoint = focal;
                     mem.OrganizationName = truncateOrgName(org.OrganizationName);
                     rep.Members.Add(mem);
+                    SaveChanges(_context);
+                    mem.FocalPointId = focal.id;
                     SaveChanges(_context);
                     retval = mem.id;
                     pushUser(focal, "Member");
@@ -287,7 +289,7 @@ namespace AgilAds.DAL
             public int addMemTeamMember(int repId, int memId, Person member)
             {
                 int retval = -1;
-                var rep = _context.Rep.FirstOrDefault(r => r.id.Equals(repId));
+                var rep = _context.Reps.FirstOrDefault(r => r.id.Equals(repId));
                 if (rep != null)
                 {
                     var mem = rep.Members.FirstOrDefault(m => m.id.Equals(memId));
@@ -304,16 +306,17 @@ namespace AgilAds.DAL
             public int addInstitution(int repId, Person focal, BusinessInfo org)
             {
                 int retval = -1;
-                var rep = _context.Rep.FirstOrDefault(r => r.id.Equals(repId));
+                var rep = _context.Reps.FirstOrDefault(r => r.id.Equals(repId));
                 if (rep != null)
                 {
                     var ins = new Institution();
                     ins.Contacts = new List<BusinessContact>();
                     ins.Team = new List<Person>();
                     ins.Team.Add(focal);
-                    //ins.FocalPoint = focal;
                     ins.OrganizationName = truncateOrgName(org.OrganizationName);
                     rep.Institutions.Add(ins);
+                    SaveChanges(_context);
+                    ins.FocalPointId = focal.id;
                     SaveChanges(_context);
                     retval = ins.id;
                     pushUser(focal, "Institution");
@@ -328,7 +331,7 @@ namespace AgilAds.DAL
             public int addInsTeamMember(int repId, int insId, Person member)
             {
                 int retval = -1;
-                var rep = _context.Rep.FirstOrDefault(r => r.id.Equals(repId));
+                var rep = _context.Reps.FirstOrDefault(r => r.id.Equals(repId));
                 if (rep != null)
                 {
                     var ins = rep.Institutions.FirstOrDefault(m => m.id.Equals(insId));

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AgilAds.DAL;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -10,10 +11,6 @@ namespace AgilAds.Models
 {
     public class Member : BusinessInfo
     {
-        //[Key]
-        //public int id { get; set; }
-        //[Required]
-        //public int FocalPointId { get; set; } //restricted to team members
         [MaxLength(Helpers.Constants.bigBuffer)]
         public string StaticMsg { get; set; }
 
@@ -55,6 +52,7 @@ namespace AgilAds.Models
             }
             //FocalPoint = focal;
             Team = new List<Person>() { focal };
+            StaticMsg = template.StaticMsg;
         }
     }
     public class MemListAllView
@@ -69,8 +67,18 @@ namespace AgilAds.Models
         {
             id = template.id;
             OrganizationName = template.OrganizationName;
-            FocalPoint = null;// template.FocalPoint.Fullname;
+            FocalPoint = AgilAds.Helpers.Utils.FindNameOf(template.FocalPointId);
             StaticMsg = template.StaticMsg;
+        }
+
+        public static List<MemListAllView> CreateListView(List<Member> members)
+        {
+            var retval = new List<MemListAllView>();
+            foreach (var member in members)
+            {
+                retval.Add(new MemListAllView(member));
+            }
+            return retval;
         }
     }
 

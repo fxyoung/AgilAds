@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AgilAds.DAL;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -73,8 +74,18 @@ namespace AgilAds.Models
         {
             id = template.id;
             Region = template.Region;
-            FocalPoint = null; ;// template.FocalPoint.Username;
+            FocalPoint = AgilAds.Helpers.Utils.FindNameOf(template.FocalPointId);
             Orgname = template.OrganizationName;
+        }
+
+        public static List<RepListAllView> CreateListView(List<Rep> reps)
+        {
+            var retval = new List<RepListAllView>();
+            foreach (var rep in reps)
+            {
+                retval.Add(new RepListAllView(rep));
+            }
+            return retval;
         }
     }
 

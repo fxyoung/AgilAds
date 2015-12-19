@@ -206,7 +206,10 @@
     <Compile Include="BusinessServices\User\MemServices.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MemController.cs" />
+    <Compile Include="Controllers\RepController.cs" />
     <Compile Include="DAL\AgilAdsDataContext.cs" />
     <Compile Include="DAL\Audit\AuditDataContext.cs" />
     <Compile Include="DAL\DbInit.cs" />
