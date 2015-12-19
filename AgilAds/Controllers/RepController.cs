@@ -50,11 +50,11 @@ namespace AgilAds.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "id,OrganizationName,BankAcctNo,FocalPointId,ArcSum,Secret,ParentId,Region,Fee,TaxRate")] Rep rep)
+        public async Task<ActionResult> Create([Bind(Include = "id," + Helpers.Constants.CreateViewCommonBindSpec + ",Region,Fee,TaxRate")] RepCreateView rep)
         {
             if (ModelState.IsValid)
             {
-                db.BusinessInfoes.Add(rep);
+                db.BusinessInfoes.Add(new Rep(rep));
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }

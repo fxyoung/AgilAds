@@ -38,6 +38,7 @@ namespace AgilAds.Helpers
         public const int indivNameMax = 25;
         public const int indivNameMin = 2;
         public const string indivNameRegexPattern = "^[a-zA-Z][a-zA-Z]*";
+        public const string CreateViewCommonBindSpec = "OrganizationName,OrganiztionContactMethod,OrganizationContact,BankAcctNo,FocalFirstname,FocalLastname,Username,FocalContactMethod,FocalContact";
     }
 
     public static class Startup
