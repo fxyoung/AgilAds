@@ -54,8 +54,14 @@ namespace AgilAds.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.BusinessInfoes.Add(new Rep(rep));
+                var nuRep = new Rep(rep);
+                db.BusinessInfoes.Add(nuRep);
                 await db.SaveChangesAsync();
+                if (nuRep.Team.Count() == 1)
+                {
+                    nuRep.FocalPointId = nuRep.Team.First().id;
+                    await db.SaveChangesAsync();
+                }
                 return RedirectToAction("Index");
             }
 

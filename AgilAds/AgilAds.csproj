@@ -339,11 +339,7 @@
     <Content Include="Views\Ins\Details.cshtml" />
     <Content Include="Views\Ins\Edit.cshtml" />
     <Content Include="Views\Ins\Index.cshtml" />
-    <Content Include="Views\Reps\Create.cshtml" />
-    <Content Include="Views\Reps\Delete.cshtml" />
-    <Content Include="Views\Reps\Details.cshtml" />
-    <Content Include="Views\Reps\Edit.cshtml" />
-    <Content Include="Views\Reps\Index.cshtml" />
+    <Content Include="Views\Shared\_Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BusinessServices\Utility\" />

@@ -27,7 +27,7 @@ namespace AgilAds.Helpers
         public const int defaultRefId = -1;
         public const int orgNameMax = 80;
         public const int orgNameMin = 2;
-        public const string orgNameRegexPattern = "^[a-zA-Z][a-zA-Z0-9.@$!#%?_' ]*";
+        public const string orgNameRegexPattern = "^[a-zA-Z][a-zA-Z0-9 .,@$!#%?_' ]*";
         public const int bigBuffer = 2000;
         public const int userNameMax = 25;
         public const int userNameMin = 6;
@@ -37,23 +37,19 @@ namespace AgilAds.Helpers
         public const string regionNameRegexPattern = "^[a-zA-Z][a-zA-Z0-9 ]*";
         public const int indivNameMax = 25;
         public const int indivNameMin = 2;
-        public const string indivNameRegexPattern = "^[a-zA-Z][a-zA-Z]*";
+        public const string indivNameRegexPattern = "^[a-zA-Z][a-zA-Z., ]*";
         public const string CreateViewCommonBindSpec = "OrganizationName,OrganiztionContactMethod,OrganizationContact,BankAcctNo,FocalFirstname,FocalLastname,Username,FocalContactMethod,FocalContact";
     }
 
     public static class Startup
     {
-        private static ApplicationUserManager _userManager = null;
+        //private static ApplicationUserManager _userManager = null;
         private static ApplicationUserManager userManager
         {
             get
             {
-                if (_userManager == null)
-                {
-                    _userManager = HttpContext.Current.GetOwinContext()
+                return HttpContext.Current.GetOwinContext()
                     .GetUserManager<ApplicationUserManager>();
-                }
-                return _userManager;
             }
         }
         public static List<string> rolesMaster { get; private set; }

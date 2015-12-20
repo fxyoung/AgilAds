@@ -10,45 +10,8 @@
     <h4>Rep</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.OrganizationName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.OrganizationName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.BankAcctNo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.BankAcctNo)
-        </dd>
-
-        <dt>
-            FocalPoint
-        </dt>
-
-        <dd>
-            @AgilAds.Helpers.Utils.FindNameOf(Model.FocalPointId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ArcSum)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ArcSum)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Secret)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Secret)
-        </dd>
+        
+        @Html.Partial(@"~\Views\Shared\_Detail.cshtml", Model)
 
         <dt>
             @Html.DisplayNameFor(model => model.Region)

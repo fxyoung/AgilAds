@@ -1,0 +1,24 @@
+﻿@model AgilAds.Models.BusinessInfo
+<dt>
+    @Html.DisplayNameFor(model => model.OrganizationName)
+</dt>
+
+<dd>
+    @Html.DisplayFor(model => model.OrganizationName)
+</dd>
+
+<dt>
+    @Html.DisplayNameFor(model => model.BankAcctNo)
+</dt>
+
+<dd>
+    @Html.DisplayFor(model => model.BankAcctNo)
+</dd>
+
+<dt>
+    FocalPoint
+</dt>
+
+<dd>
+    @AgilAds.Helpers.Utils.FindNameOf(Model.FocalPointId)
+</dd>
