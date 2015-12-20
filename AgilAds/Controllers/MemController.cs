@@ -57,11 +57,7 @@ namespace AgilAds.Controllers
                 var nuMem = new Member(member);
                 db.BusinessInfoes.Add(nuMem);
                 await db.SaveChangesAsync();
-                if (nuMem.Team.Count() == 1)
-                {
-                    nuMem.FocalPointId = nuMem.Team.First().id;
-                    await db.SaveChangesAsync();
-                }
+                Helpers.Utils.InitializeFocalPoint(nuMem, db);
                 return RedirectToAction("Index");
             }
 
@@ -81,7 +77,7 @@ namespace AgilAds.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ParentId = new SelectList(db.BusinessInfoes, "id", "OrganizationName", member.ParentId);
+            ViewBag.FocalPoint = new SelectList(member.Team, "id", "FullName", member.FocalPointId);
             return View(member);
         }
 
@@ -98,7 +94,7 @@ namespace AgilAds.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.ParentId = new SelectList(db.BusinessInfoes, "id", "OrganizationName", member.ParentId);
+            ViewBag.FocalPoint = new SelectList(member.Team, "id", "FullName", member.FocalPointId);
             return View(member);
         }
 

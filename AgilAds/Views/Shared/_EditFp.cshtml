@@ -1,0 +1,31 @@
+﻿@model AgilAds.Models.BusinessInfo
+<div class="form-group">
+    @Html.LabelFor(model => model.OrganizationName, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.OrganizationName, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.OrganizationName, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(model => model.BankAcctNo, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.BankAcctNo, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.BankAcctNo, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.Label("Focal Point", htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownList("FocalPoint", null, htmlAttributes: new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.FocalPointId, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.Label("Parent Organization", htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @AgilAds.Helpers.Utils.FindOrgNameOf(Model.ParentId??0)
+    </div>
+</div>

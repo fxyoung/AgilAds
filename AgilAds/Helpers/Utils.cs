@@ -166,22 +166,25 @@ namespace AgilAds.Helpers
             }
             return name;
         }
-        public static List<System.Web.Mvc.SelectListItem> MakeSelectList(string[] e,
-            string selectedItem = null)
+
+        public static string FindOrgNameOf(int id)
         {
-            var l = new List<System.Web.Mvc.SelectListItem>();
-            var s = e.ToList();
-            s.Sort();
-            foreach (var str in s)
+            var name = "not defined";
+            using (var db = new AgilAdsDataContext())
             {
-                l.Add(new System.Web.Mvc.SelectListItem()
-                {
-                    Text = str,
-                    Value = str,
-                    Selected = str.Equals(selectedItem)
-                });
+                var fp = db.BusinessInfoes.Find(id);
+                if (fp != null) name = fp.OrganizationName;
             }
-            return l;
+            return name;
+        }
+
+        public static async void InitializeFocalPoint(BusinessInfo ele, AgilAdsDataContext db)
+        {
+            if (ele.Team.Count() == 1)
+            {
+                ele.FocalPointId = ele.Team.First().id;
+                await db.SaveChangesAsync();
+            }
         }
     }
 }

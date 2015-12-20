@@ -150,7 +150,7 @@ namespace AgilAds.DAL
                             Contact="206--555-2805 ext 427"}};
             p = new Person() { Firstname = "Marty", Lastname = "Frank", Contacts = pc };
             p.Username = (p.Firstname + p.Lastname).ToLower();
-            var insSSCCSOBtm1 = testdata.addInsTeamMember(repId, insBCOC, p);
+            var insSSCCSOBtm1 = testdata.addInsTeamMember(repId, insSSCCSOB, p);
         }
         class adsys
         {

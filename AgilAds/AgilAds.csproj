@@ -340,6 +340,7 @@
     <Content Include="Views\Ins\Edit.cshtml" />
     <Content Include="Views\Ins\Index.cshtml" />
     <Content Include="Views\Shared\_Detail.cshtml" />
+    <Content Include="Views\Shared\_EditFp.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BusinessServices\Utility\" />
