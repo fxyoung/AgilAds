@@ -22,7 +22,7 @@ namespace AgilAds.Attributes
         public enum Users { Admin, All }
 
         public static bool FilterAccess(Controller controller,
-            ActionExecutingContext filter, IUnitOfWork uow)
+            ActionExecutingContext filter, IUnitOfWorkAsync uow)
         {
             bool retval = true;
             bool throwOnNotAuthorized = false;
@@ -71,11 +71,11 @@ namespace AgilAds.Attributes
         }
 
         private static Dictionary<Valid.Context, List<Valid.Action>>
-            getPrivileges(string username, IUnitOfWork uow)
+            getPrivileges(string username, IUnitOfWorkAsync uow)
         {
             var retval = new Dictionary<Valid.Context, List<Valid.Action>>();
             if (String.IsNullOrWhiteSpace(username)) return retval;
-            var privs = new AgilAds.BusinessServices.Administration.PrivServices(uow).
+            var privs = new AgilAds.BusinessServices.Administration.PrivServicesAsync(uow).
                 GetPrivsForUser(username);
             foreach (var priv in privs)
             {

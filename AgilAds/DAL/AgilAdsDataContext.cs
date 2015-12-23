@@ -60,5 +60,7 @@ namespace AgilAds.DAL
             }
             return base.SaveChanges();
         }
+
+        public System.Data.Entity.DbSet<AgilAds.Models.ContactInfo> ContactInfoes { get; set; }
     }
 }

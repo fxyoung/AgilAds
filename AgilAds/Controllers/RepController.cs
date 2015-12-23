@@ -9,18 +9,31 @@ using System.Web;
 using System.Web.Mvc;
 using AgilAds.DAL;
 using AgilAds.Models;
+using AgilAds.Helpers;
 
 namespace AgilAds.Controllers
 {
-    public class RepController : Controller
+    public class RepController : ReqBaseController
     {
         private AgilAdsDataContext db = new AgilAdsDataContext();
+        private IUnitOfWorkAsync _uow;
+        private const string idMsg = "Rep Controller";
+        public RepController(IUnitOfWorkAsync uow) : base(uow, stackFrame.stackContext.Rep)
+        {
+            _uow = uow;
+        }
 
         // GET: Rep
         public async Task<ActionResult> Index()
         {
             var reps = db.Reps;
             return View(RepListAllView.CreateListView(await reps.ToListAsync()));
+        }
+
+        public ActionResult Team(int id)
+        {
+            var route = stackFrame.Invoke(stackFrame.stackContext.businessInfoTeam, id, idMsg);
+            return RedirectToRoute(route);
         }
 
         // GET: Rep/Details/5
@@ -57,7 +70,11 @@ namespace AgilAds.Controllers
                 var nuRep = new Rep(rep);
                 db.BusinessInfoes.Add(nuRep);
                 await db.SaveChangesAsync();
-                Helpers.Utils.InitializeFocalPoint(nuRep, db);
+                if (nuRep.Team.Count() == 1)
+                {
+                    nuRep.FocalPointId = nuRep.Team.First().id;
+                    await db.SaveChangesAsync();
+                }
                 return RedirectToAction("Index");
             }
 

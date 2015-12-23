@@ -21,7 +21,7 @@ namespace AgilAds.BusinessServices.Administration
     public interface IRepServicesAsync
     {
         Task<Models.Rep> GetRepById(int id);
-        Task<Models.Rep> GetRepByName(string username);
+        //Task<Models.Rep> GetRepByName(string username);
         Task<IEnumerable<Models.RepListAllView>> GetAllReps();
         Task<IEnumerable<Rep>> GetWithInclude(
             System.Linq.Expressions.Expression<Func<Rep, Boolean>> predicate, string[] include);

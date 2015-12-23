@@ -26,5 +26,21 @@ namespace AgilAds.Controllers
 
             return View();
         }
+
+        public ActionResult Summary()
+        {
+            using (var db = new AgilAds.DAL.AgilAdsDataContext())
+            {
+                var AdInfoes = db.AdInfoes.Count();
+                var Admins = db.Admins.Count();
+                var BusinessInfoes = db.BusinessInfoes.Count();
+                var Institutions = db.Institutions.Count();
+                var Members = db.Members.Count();
+                var People = db.People.Count();
+                var Privs = db.Privs.Count();
+                var Reps = db.Reps.Count();
+            }
+            return RedirectToAction("Index");
+        }
     }
 }

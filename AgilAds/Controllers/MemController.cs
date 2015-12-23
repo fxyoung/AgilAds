@@ -57,7 +57,11 @@ namespace AgilAds.Controllers
                 var nuMem = new Member(member);
                 db.BusinessInfoes.Add(nuMem);
                 await db.SaveChangesAsync();
-                Helpers.Utils.InitializeFocalPoint(nuMem, db);
+                if (nuMem.Team.Count() == 1)
+                {
+                    nuMem.FocalPointId = nuMem.Team.First().id;
+                    await db.SaveChangesAsync();
+                }
                 return RedirectToAction("Index");
             }
 

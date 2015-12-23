@@ -1,0 +1,43 @@
+﻿@model IEnumerable<AgilAds.Models.Person>
+
+@{
+    ViewBag.Title = "BIT Index";
+}
+
+<h2>@ViewBag.OrganizationName Team</h2>
+
+<p>
+    @Html.ActionLink("Create Team Member", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Fullname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Username)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Fullname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Username)
+        </td>
+        <td>
+            @Html.ActionLink("Contact", "Contact", new { id = item.id }) |
+             @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+        </td>
+    </tr>
+}
+
+</table>
+<p>
+    @Html.ActionLink("BACK to " + (string)ViewBag.CallerId, "Back")
+</p>

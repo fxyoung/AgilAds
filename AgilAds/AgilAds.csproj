@@ -201,10 +201,13 @@
     <Compile Include="BusinessServices\Administration\IPrivServices.cs" />
     <Compile Include="BusinessServices\Administration\IRepServices.cs" />
     <Compile Include="BusinessServices\Administration\PrivServices.cs" />
+    <Compile Include="BusinessServices\Administration\PrivServicesAsync.cs" />
     <Compile Include="BusinessServices\Administration\RepServices.cs" />
     <Compile Include="BusinessServices\User\IMemServices.cs" />
     <Compile Include="BusinessServices\User\MemServices.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BITController.cs" />
+    <Compile Include="Controllers\TMCController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -220,7 +223,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ControllerExtensions.cs" />
+    <Compile Include="Helpers\IStackable.cs" />
     <Compile Include="Helpers\ReqBaseController.cs" />
+    <Compile Include="Helpers\stackFrame.cs" />
     <Compile Include="Helpers\Utils.cs" />
     <Compile Include="MigrationsAgilAdsDb\201512180140525_Initial.cs" />
     <Compile Include="MigrationsAgilAdsDb\201512180140525_Initial.Designer.cs">
@@ -341,6 +346,26 @@
     <Content Include="Views\Ins\Index.cshtml" />
     <Content Include="Views\Shared\_Detail.cshtml" />
     <Content Include="Views\Shared\_EditFp.cshtml" />
+    <Content Include="Views\BI\Create.cshtml" />
+    <Content Include="Views\BI\Delete.cshtml" />
+    <Content Include="Views\BI\Details.cshtml" />
+    <Content Include="Views\BI\Edit.cshtml" />
+    <Content Include="Views\BI\Index.cshtml" />
+    <Content Include="Views\BIT\Create.cshtml" />
+    <Content Include="Views\BIT\Delete.cshtml" />
+    <Content Include="Views\BIT\Details.cshtml" />
+    <Content Include="Views\BIT\Edit.cshtml" />
+    <Content Include="Views\BIT\Index.cshtml" />
+    <Content Include="Views\BusinessInfoes\Create.cshtml" />
+    <Content Include="Views\BusinessInfoes\Delete.cshtml" />
+    <Content Include="Views\BusinessInfoes\Details.cshtml" />
+    <Content Include="Views\BusinessInfoes\Edit.cshtml" />
+    <Content Include="Views\BusinessInfoes\Index.cshtml" />
+    <Content Include="Views\TMC\Create.cshtml" />
+    <Content Include="Views\TMC\Delete.cshtml" />
+    <Content Include="Views\TMC\Details.cshtml" />
+    <Content Include="Views\TMC\Edit.cshtml" />
+    <Content Include="Views\TMC\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BusinessServices\Utility\" />

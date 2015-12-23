@@ -103,10 +103,10 @@ namespace AgilAds.BusinessServices.Administration
             return await _uow.RepRepository.GetByID(id);
         }
 
-        public async Task<Rep> GetRepByName(string username)
-        {
-            throw new NotImplementedException();// _uow.RepRepository.GetSingleOrDefault(r => r.FocalPoint.Username.Equals(username));
-        }
+        //public async Task<Rep> GetRepByName(string username)
+        //{
+        //    throw new NotImplementedException();// _uow.RepRepository.GetSingleOrDefault(r => r.FocalPoint.Username.Equals(username));
+        //}
 
         public async Task<IEnumerable<Rep>> GetWithInclude(
             System.Linq.Expressions.Expression<Func<Rep, Boolean>> predicate,

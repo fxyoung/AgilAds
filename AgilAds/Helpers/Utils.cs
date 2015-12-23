@@ -52,10 +52,26 @@ namespace AgilAds.Helpers
                     .GetUserManager<ApplicationUserManager>();
             }
         }
-        public static List<string> rolesMaster { get; private set; }
-        public static List<string> OwnerRoles { get; private set; }
-        public static List<string> AdminRoles { get; private set; }
-        public static string defaultUser { get; private set; }
+        private static List<string> _rolesMaster = null;
+        public static List<string> rolesMaster {
+            get { if (_rolesMaster == null) getConfigDefaults(); return _rolesMaster; }
+            private set { _rolesMaster = value; }
+        }
+        private static List<string> _OwnerRoles = null;
+        public static List<string> OwnerRoles {
+            get { if (_rolesMaster == null) getConfigDefaults(); return _OwnerRoles; }
+            private set { _OwnerRoles = value; }
+        }
+        private static List<string> _AdminRoles = null;
+        public static List<string> AdminRoles {
+            get { if (_rolesMaster == null) getConfigDefaults(); return _AdminRoles; }
+            private set { _AdminRoles = value; }
+        }
+        private static string _defaultUser = null;
+        public static string defaultUser {
+            get { if (_rolesMaster == null) getConfigDefaults(); return _defaultUser; }
+            private set { _defaultUser = value; }
+        }
         private enum startupVar
         { Username, UserRole, UserEmail, UserPassword, Rolenames, OwnerRoles, AdminRoles }
         private static Dictionary<startupVar, string> GetStartupSettings()
@@ -176,15 +192,6 @@ namespace AgilAds.Helpers
                 if (fp != null) name = fp.OrganizationName;
             }
             return name;
-        }
-
-        public static async void InitializeFocalPoint(BusinessInfo ele, AgilAdsDataContext db)
-        {
-            if (ele.Team.Count() == 1)
-            {
-                ele.FocalPointId = ele.Team.First().id;
-                await db.SaveChangesAsync();
-            }
         }
     }
 }
