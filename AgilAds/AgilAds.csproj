@@ -227,9 +227,9 @@
     <Compile Include="Helpers\ReqBaseController.cs" />
     <Compile Include="Helpers\stackFrame.cs" />
     <Compile Include="Helpers\Utils.cs" />
-    <Compile Include="MigrationsAgilAdsDb\201512180140525_Initial.cs" />
-    <Compile Include="MigrationsAgilAdsDb\201512180140525_Initial.Designer.cs">
-      <DependentUpon>201512180140525_Initial.cs</DependentUpon>
+    <Compile Include="MigrationsAgilAdsDb\201512231934195_Initial.cs" />
+    <Compile Include="MigrationsAgilAdsDb\201512231934195_Initial.Designer.cs">
+      <DependentUpon>201512231934195_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="MigrationsAgilAdsDb\Configuration.cs" />
     <Compile Include="MigrationsApplicationDb\201511252212224_Initial.cs" />
@@ -378,8 +378,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="MigrationsAgilAdsDb\201512180140525_Initial.resx">
-      <DependentUpon>201512180140525_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="MigrationsAgilAdsDb\201512231934195_Initial.resx">
+      <DependentUpon>201512231934195_Initial.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MigrationsApplicationDb\201511252212224_Initial.resx">
       <DependentUpon>201511252212224_Initial.cs</DependentUpon>

@@ -8,6 +8,7 @@ using System.Web;
 
 namespace AgilAds.Models
 {
+    [Table("ContactInfoes")]
     public abstract class ContactInfo
     {
         public enum contactMethod { phone, email, address, webSite, sms }
@@ -21,7 +22,6 @@ namespace AgilAds.Models
         [Display(Name = "Contact Information")]
         public string Contact { get; set; }
     }
-    [Table("PersonalContacts")]
     public class PersonalContact : ContactInfo
     {
         [Required]
@@ -29,7 +29,6 @@ namespace AgilAds.Models
         [ForeignKey("IdentityId")]
         public virtual Person Identity { get; set; }
     }
-    [Table("BusinessContacts")]
     public class BusinessContact : ContactInfo
     {
         [Required]
