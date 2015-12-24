@@ -13,36 +13,33 @@ using AgilAds.Helpers;
 
 namespace AgilAds.Controllers
 {
-    public class TMCController : ReqBaseController, IStackable
+    public class BICController : ReqBaseController, IStackable
     {
         private AgilAdsDataContext db = new AgilAdsDataContext();
         private IUnitOfWorkAsync _uow;
-        private const string idMsg = "TMC Controller";
         private stackFrame _frame;
-        private Person person;
-        public TMCController(IUnitOfWorkAsync uow) 
-            : base(uow, stackFrame.stackContext.teamMemberContact)
+        private BusinessInfo bi;
+        public BICController(IUnitOfWorkAsync uow)
+            : base(uow, stackFrame.stackContext.businessInfoContact)
         {
             _uow = uow;
             _frame = stackFrame.PeekContext();
             GetRoot().Wait();
-            ViewBag.OrganizationName = person.Business.OrganizationName;
-            ViewBag.Person = person.Fullname;
+            ViewBag.OrganizationName = bi.OrganizationName;
             ViewBag.CallerId = _frame.callerId;
         }
         private async Task GetRoot()
         {
-            person = await db.People.SingleAsync(
-                p => p.id == (int)_frame.param).ConfigureAwait(continueOnCapturedContext:false);
+            bi = await db.BusinessInfoes.SingleAsync(
+                b => b.id == (int)_frame.param).ConfigureAwait(continueOnCapturedContext: false);
         }
-
-        // GET: Contact
+        // GET: BIC
         public ActionResult Index()
         {
-            return View(person.Contacts.ToList());
+            return View(bi.Contacts.ToList());
         }
 
-        // GET: Contact/Details/5
+        // GET: BIC/Details/5
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
@@ -57,30 +54,30 @@ namespace AgilAds.Controllers
             return View(contactInfo);
         }
 
-        // GET: Contact/Create
+        // GET: BIC/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Contact/Create
+        // POST: BIC/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "id,Method,Contact")] PersonalContact contactInfo)
+        public async Task<ActionResult> Create([Bind(Include = "id,Method,Contact,BusinessInfoId")] BusinessContact businessContact)
         {
             if (ModelState.IsValid)
             {
-                db.ContactInfoes.Add(contactInfo);
-                person.Contacts.Add(contactInfo);
+                db.ContactInfoes.Add(businessContact);
+                bi.Contacts.Add(businessContact);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(contactInfo);
+            return View(businessContact);
         }
 
-        // GET: Contact/Edit/5
+        // GET: BIC/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -95,23 +92,23 @@ namespace AgilAds.Controllers
             return View(contactInfo);
         }
 
-        // POST: Contact/Edit/5
+        // POST: BIC/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "id,Method,Contact")] ContactInfo contactInfo)
+        public async Task<ActionResult> Edit([Bind(Include = "id,Method,Contact,BusinessInfoId")] BusinessContact businessContact)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(contactInfo).State = EntityState.Modified;
+                db.Entry(businessContact).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(contactInfo);
+            return View(businessContact);
         }
 
-        // GET: Contact/Delete/5
+        // GET: BIC/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -126,15 +123,14 @@ namespace AgilAds.Controllers
             return View(contactInfo);
         }
 
-        // POST: Contact/Delete/5
+        // POST: BIC/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            var contactInfo = await db.ContactInfoes.FindAsync(id);
-            var personalContact = (PersonalContact)contactInfo;
+            ContactInfo contactInfo = await db.ContactInfoes.FindAsync(id);
             db.ContactInfoes.Remove(contactInfo);
-            person.Contacts.Remove(personalContact);
+            bi.Contacts.Remove((BusinessContact)contactInfo);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }

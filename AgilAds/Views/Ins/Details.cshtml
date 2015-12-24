@@ -1,13 +1,13 @@
 ﻿@model AgilAds.Models.Institution
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "INS Institution Details";
 }
 
 <h2>Details</h2>
 
 <div>
-    <h4>Institution</h4>
+    <h4>Institution for @ViewBag.OrganizationName</h4>
     <hr />
     <dl class="dl-horizontal">
         
@@ -26,4 +26,5 @@
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
     @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("BACK to " + (string)ViewBag.CallerId, "Back")
 </p>

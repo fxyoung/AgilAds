@@ -9,18 +9,49 @@ using System.Web;
 using System.Web.Mvc;
 using AgilAds.DAL;
 using AgilAds.Models;
+using AgilAds.Helpers;
 
 namespace AgilAds.Controllers
 {
-    public class InsController : Controller
+    public class InsController : ReqBaseController, IStackable
     {
         private AgilAdsDataContext db = new AgilAdsDataContext();
+        private IUnitOfWorkAsync _uow;
+        private const string idMsg = "Ins Controller";
+        private stackFrame _frame;
+        private Rep rep;
+        public InsController(IUnitOfWorkAsync uow)
+            : base(uow, stackFrame.stackContext.Institution)
+        {
+            _uow = uow;
+            _frame = stackFrame.PeekContext();
+           GetRoot().Wait();
+           ViewBag.OrganizationName = rep.OrganizationName;
+           ViewBag.CallerId = _frame.callerId;
+        }
+        private async Task GetRoot()
+        {
+            var task =  db.Reps.Include("Institutions").SingleAsync(r => r.id == (int)_frame.param);
+            rep = await task.ConfigureAwait(false);
+        }
 
         // GET: Ins
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
-            var Institutuions = db.Institutions;
-            return View(InstitutionListAllView.CreateListView(await Institutuions.ToListAsync()));
+            var Institutions = rep.Institutions.ToList();
+            return View(InstitutionListAllView.CreateListView( Institutions));
+        }
+
+        public ActionResult Team(int id)
+        {
+            var route = stackFrame.Invoke(stackFrame.stackContext.businessInfoTeam, id, idMsg);
+            return RedirectToRoute(route);
+        }
+
+        public ActionResult Contact(int id)
+        {
+            var route = stackFrame.Invoke(stackFrame.stackContext.businessInfoContact, id, idMsg);
+            return RedirectToRoute(route);
         }
 
         // GET: Ins/Details/5
@@ -41,7 +72,6 @@ namespace AgilAds.Controllers
         // GET: Ins/Create
         public ActionResult Create()
         {
-            ViewBag.ContactMethod = new SelectList(Enum.GetNames(typeof(ContactInfo.contactMethod)));
             return View();
         }
 
@@ -64,8 +94,6 @@ namespace AgilAds.Controllers
                 }
                 return RedirectToAction("Index");
             }
-
-            ViewBag.ContactMethod = new SelectList(Enum.GetNames(typeof(ContactInfo.contactMethod)));
             return View(institution);
         }
 

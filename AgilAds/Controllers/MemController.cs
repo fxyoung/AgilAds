@@ -9,18 +9,47 @@ using System.Web;
 using System.Web.Mvc;
 using AgilAds.DAL;
 using AgilAds.Models;
+using AgilAds.Helpers;
 
 namespace AgilAds.Controllers
 {
-    public class MemController : Controller
+    public class MemController : ReqBaseController, IStackable
     {
         private AgilAdsDataContext db = new AgilAdsDataContext();
+        private IUnitOfWorkAsync _uow;
+        private const string idMsg = "Mem Controller";
+        private stackFrame _frame;
+        private Rep rep;
+        public MemController(IUnitOfWorkAsync uow)
+            : base(uow, stackFrame.stackContext.Member)
+        {
+            _uow = uow;
+            _frame = stackFrame.PeekContext();
+            GetRoot().Wait();
+            ViewBag.OrganizationName = rep.OrganizationName;
+            ViewBag.CallerId = _frame.callerId;
+        }
+        private async Task GetRoot()
+        {
+            rep = await db.Reps.SingleAsync(r => r.id == (int)_frame.param);
+        }
 
         // GET: Mem
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
-            var members = db.Members;
-            return View(MemListAllView.CreateListView(await members.ToListAsync()));
+            return View(MemListAllView.CreateListView(rep.Members.ToList()));
+        }
+
+        public ActionResult Team(int id)
+        {
+            var route = stackFrame.Invoke(stackFrame.stackContext.businessInfoTeam, id, idMsg);
+            return RedirectToRoute(route);
+        }
+
+        public ActionResult Contact(int id)
+        {
+            var route = stackFrame.Invoke(stackFrame.stackContext.businessInfoContact, id, idMsg);
+            return RedirectToRoute(route);
         }
 
         // GET: Mem/Details/5
@@ -41,7 +70,6 @@ namespace AgilAds.Controllers
         // GET: Mem/Create
         public ActionResult Create()
         {
-            ViewBag.ContactMethod = new SelectList(Enum.GetNames(typeof(ContactInfo.contactMethod)));
             return View();
         }
 
@@ -64,8 +92,6 @@ namespace AgilAds.Controllers
                 }
                 return RedirectToAction("Index");
             }
-
-            ViewBag.ContactMethod = new SelectList(Enum.GetNames(typeof(ContactInfo.contactMethod)));
             return View(member);
         }
 

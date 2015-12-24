@@ -65,19 +65,19 @@ namespace AgilAds.DAL
                 Contact = "206.555.1122",
                 Method = ContactInfo.contactMethod.phone
             });
-            var teamBurien1 = testdata.addTeamMember(repId, new Person() 
+            var teamBurien1algreen = testdata.addTeamMember(repId, new Person() 
             { 
                 Firstname = "Al", 
                 Lastname = "Green",
                 Contacts = new List<PersonalContact>(),
                 Username = "algreen" 
             },"RA");
-            testdata.addPersonalContact(repId, teamBurien1, new PersonalContact()
+            testdata.addPersonalContact(repId, teamBurien1algreen, new PersonalContact()
             {
                 Contact = "206.555.1122",
                 Method = ContactInfo.contactMethod.phone
             });
-            testdata.addPersonalContact(repId, teamBurien1, new PersonalContact()
+            testdata.addPersonalContact(repId, teamBurien1algreen, new PersonalContact()
             {
                 Contact = "agilads@primeSites.com",
                 Method = ContactInfo.contactMethod.email
@@ -220,6 +220,7 @@ namespace AgilAds.DAL
                     re.Team = new List<Person>();
                     re.Members = new List<Member>();
                     re.Institutions = new List<Institution>();
+                    re.ParentId = null;
                     re.Team.Add(rep);
                     re.OrganizationName = truncateOrgName(org.OrganizationName);
                     _context.Reps.Add(re);
@@ -276,6 +277,7 @@ namespace AgilAds.DAL
                     mem.Contacts = new List<BusinessContact>();
                     mem.Team = new List<Person>();
                     mem.Team.Add(focal);
+                    mem.ParentId = repId;
                     mem.OrganizationName = truncateOrgName(org.OrganizationName);
                     rep.Members.Add(mem);
                     SaveChanges(_context);
@@ -314,6 +316,7 @@ namespace AgilAds.DAL
                     ins.Team = new List<Person>();
                     ins.Team.Add(focal);
                     ins.OrganizationName = truncateOrgName(org.OrganizationName);
+                    ins.ParentId = repId;
                     rep.Institutions.Add(ins);
                     SaveChanges(_context);
                     ins.FocalPointId = focal.id;

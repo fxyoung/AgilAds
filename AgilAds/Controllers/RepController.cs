@@ -36,6 +36,24 @@ namespace AgilAds.Controllers
             return RedirectToRoute(route);
         }
 
+        public ActionResult Contact(int id)
+        {
+            var route = stackFrame.Invoke(stackFrame.stackContext.businessInfoContact, id, idMsg);
+            return RedirectToRoute(route);
+        }
+
+        public ActionResult Member(int id)
+        {
+            var route = stackFrame.Invoke(stackFrame.stackContext.Member, id, idMsg);
+            return RedirectToRoute(route);
+        }
+
+        public ActionResult Institution(int id)
+        {
+            var route = stackFrame.Invoke(stackFrame.stackContext.Institution, id, idMsg);
+            return RedirectToRoute(route);
+        }
+
         // GET: Rep/Details/5
         public async Task<ActionResult> Details(int? id)
         {
@@ -54,7 +72,6 @@ namespace AgilAds.Controllers
         // GET: Rep/Create
         public ActionResult Create()
         {
-            ViewBag.ContactMethod = new SelectList(Enum.GetNames(typeof(ContactInfo.contactMethod)));
             return View();
         }
 
@@ -77,8 +94,6 @@ namespace AgilAds.Controllers
                 }
                 return RedirectToAction("Index");
             }
-
-            ViewBag.ContactMethod = new SelectList(Enum.GetNames(typeof(ContactInfo.contactMethod)));
             return View(rep);
         }
 

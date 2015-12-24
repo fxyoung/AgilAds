@@ -1,25 +1,29 @@
-﻿@model AgilAds.Models.Institution
+﻿@model AgilAds.Models.BusinessContact
 
 @{
-    ViewBag.Title = "INS Delete Institution";
+    ViewBag.Title = "BIC Delete Contact";
 }
 
-<h2>Delete Institution for @ViewBag.OrganizationName</h2>
+<h2>Delete Contact for @ViewBag.OrganizationName</h2>
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Institution</h4>
     <hr />
     <dl class="dl-horizontal">
-
-        @Html.Partial(@"~\Views\Shared\_Detail.cshtml", Model)
-
         <dt>
-            @Html.DisplayNameFor(model => model.MonthlyAdFee)
+            @Html.DisplayNameFor(model => model.Method)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.MonthlyAdFee)
+            @Html.DisplayFor(model => model.Method)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Contact)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Contact)
         </dd>
 
     </dl>

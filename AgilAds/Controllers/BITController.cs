@@ -15,22 +15,28 @@ namespace AgilAds.Controllers
 {
     public class BITController : ReqBaseController, IStackable
     {
-        private string idMsg = "BIT Controller";
+        private const string idMsg = "BIT Controller";
         private AgilAdsDataContext db = new AgilAdsDataContext();
         private IUnitOfWorkAsync _uow;
         private stackFrame _frame;
+        private BusinessInfo bi;
         public BITController(IUnitOfWorkAsync uow) : base(uow, stackFrame.stackContext.businessInfoTeam)
         {
             _uow = uow;
             _frame = stackFrame.PeekContext();
+            GetRoot().Wait();
+            ViewBag.OrganizationName = bi.OrganizationName;
+            ViewBag.CallerId = _frame.callerId;
+        }
+        private async Task GetRoot()
+        {
+            bi = await db.BusinessInfoes.SingleOrDefaultAsync(
+                b => b.id == (int)_frame.param).ConfigureAwait(continueOnCapturedContext:false);
         }
 
         // GET: BIT
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
-               var bi = await db.BusinessInfoes.SingleOrDefaultAsync(b => b.id == (int)_frame.param);
-               ViewBag.OrganizationName = bi.OrganizationName;
-               ViewBag.CallerId = _frame.callerId;
                return View(bi.Team.ToList());
         }
 
@@ -52,17 +58,12 @@ namespace AgilAds.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.OrganizationName = person.Business.OrganizationName;
-            ViewBag.CallerId = _frame.callerId;
             return View(person);
         }
 
         // GET: BIT/Create
-        public async Task<ActionResult> Create()
+        public ActionResult Create()
         {
-            var bi = await db.BusinessInfoes.SingleOrDefaultAsync(b => b.id == (int)_frame.param);
-            ViewBag.OrganizationName = bi.OrganizationName;
-            ViewBag.CallerId = _frame.callerId;
             return View();
         }
 
@@ -73,7 +74,6 @@ namespace AgilAds.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "id,Firstname,Lastname,Username")] Person person)
         {
-            var bi = await db.BusinessInfoes.SingleOrDefaultAsync(b => b.id == (int)_frame.param);
             if (ModelState.IsValid)
             {
                 db.People.Add(person);
@@ -81,10 +81,6 @@ namespace AgilAds.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-
-            //var bi = await db.BusinessInfoes.SingleOrDefaultAsync(b => b.id == (int)_frame.param);
-            ViewBag.OrganizationName = bi.OrganizationName;
-            ViewBag.CallerId = _frame.callerId;
             return View(person);
         }
 
@@ -100,8 +96,6 @@ namespace AgilAds.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.OrganizationName = person.Business.OrganizationName;
-            ViewBag.CallerId = _frame.callerId;
             return View(person);
         }
 
@@ -118,9 +112,6 @@ namespace AgilAds.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            var bi = await db.BusinessInfoes.SingleOrDefaultAsync(b => b.id == (int)_frame.param);
-            ViewBag.OrganizationName = bi.OrganizationName;
-            ViewBag.CallerId = _frame.callerId;
             return View(person);
         }
 
@@ -136,8 +127,6 @@ namespace AgilAds.Controllers
             {
                 return HttpNotFound();
             }
-            var bi = await db.BusinessInfoes.SingleOrDefaultAsync(b => b.id == (int)_frame.param);
-            ViewBag.OrganizationName = bi.OrganizationName;
             return View(person);
         }
 
@@ -147,7 +136,6 @@ namespace AgilAds.Controllers
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             Person person = await db.People.FindAsync(id);
-            var bi = await db.BusinessInfoes.SingleOrDefaultAsync(b => b.id == (int)_frame.param);
             bi.Team.Remove(person);
             db.People.Remove(person);
             await db.SaveChangesAsync();

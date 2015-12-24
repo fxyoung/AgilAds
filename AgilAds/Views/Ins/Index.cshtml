@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<AgilAds.Models.InstitutionListAllView>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Institution Index";
 }
 
-<h2>Index</h2>
+<h2>List of @ViewBag.OrganizationName Institutions</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -35,7 +35,9 @@
             @Html.DisplayFor(modelItem => item.MonthlyAdFee)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Contact", "Contact", new { id = item.id }) |
+            @Html.ActionLink("Team", "Team", new { id = item.id }) |
+            @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
             @Html.ActionLink("Details", "Details", new { id=item.id }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.id })
         </td>
@@ -43,3 +45,6 @@
 }
 
 </table>
+<div>
+    @Html.ActionLink("BACK to " + (string)ViewBag.CallerId, "Back")
+</div>

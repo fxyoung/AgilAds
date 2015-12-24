@@ -206,6 +206,7 @@
     <Compile Include="BusinessServices\User\IMemServices.cs" />
     <Compile Include="BusinessServices\User\MemServices.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BICController.cs" />
     <Compile Include="Controllers\BITController.cs" />
     <Compile Include="Controllers\TMCController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -346,11 +347,6 @@
     <Content Include="Views\Ins\Index.cshtml" />
     <Content Include="Views\Shared\_Detail.cshtml" />
     <Content Include="Views\Shared\_EditFp.cshtml" />
-    <Content Include="Views\BI\Create.cshtml" />
-    <Content Include="Views\BI\Delete.cshtml" />
-    <Content Include="Views\BI\Details.cshtml" />
-    <Content Include="Views\BI\Edit.cshtml" />
-    <Content Include="Views\BI\Index.cshtml" />
     <Content Include="Views\BIT\Create.cshtml" />
     <Content Include="Views\BIT\Delete.cshtml" />
     <Content Include="Views\BIT\Details.cshtml" />
@@ -366,6 +362,11 @@
     <Content Include="Views\TMC\Details.cshtml" />
     <Content Include="Views\TMC\Edit.cshtml" />
     <Content Include="Views\TMC\Index.cshtml" />
+    <Content Include="Views\BIC\Create.cshtml" />
+    <Content Include="Views\BIC\Delete.cshtml" />
+    <Content Include="Views\BIC\Details.cshtml" />
+    <Content Include="Views\BIC\Edit.cshtml" />
+    <Content Include="Views\BIC\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BusinessServices\Utility\" />

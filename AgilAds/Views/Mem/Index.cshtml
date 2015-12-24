@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<AgilAds.Models.MemListAllView>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Mem Index";
 }
 
-<h2>Index</h2>
+<h2>List of @ViewBag.OrganizationName Members</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -35,6 +35,8 @@
             @Html.DisplayFor(modelItem => item.StaticMsg)
         </td>
         <td>
+            @Html.ActionLink("Contact", "Contact", new { id = item.id }) |
+            @Html.ActionLink("Team", "Team", new { id = item.id }) |
             @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
             @Html.ActionLink("Details", "Details", new { id=item.id }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.id })
