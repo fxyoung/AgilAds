@@ -352,11 +352,6 @@
     <Content Include="Views\BIT\Details.cshtml" />
     <Content Include="Views\BIT\Edit.cshtml" />
     <Content Include="Views\BIT\Index.cshtml" />
-    <Content Include="Views\BusinessInfoes\Create.cshtml" />
-    <Content Include="Views\BusinessInfoes\Delete.cshtml" />
-    <Content Include="Views\BusinessInfoes\Details.cshtml" />
-    <Content Include="Views\BusinessInfoes\Edit.cshtml" />
-    <Content Include="Views\BusinessInfoes\Index.cshtml" />
     <Content Include="Views\TMC\Create.cshtml" />
     <Content Include="Views\TMC\Delete.cshtml" />
     <Content Include="Views\TMC\Details.cshtml" />

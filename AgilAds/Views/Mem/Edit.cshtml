@@ -1,17 +1,16 @@
 ﻿@model AgilAds.Models.Member
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "MEM Edit Member";
 }
 
-<h2>Edit</h2>
+<h2>Edit Member of @ViewBag.OrganizationName</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Member</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.id)
@@ -36,4 +35,5 @@
 
 <div>
     @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("BACK to " + (string)ViewBag.CallerId, "Back")
 </div>
