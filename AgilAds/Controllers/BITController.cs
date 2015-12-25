@@ -23,7 +23,7 @@ namespace AgilAds.Controllers
         public BITController(IUnitOfWorkAsync uow) : base(uow, stackFrame.stackContext.businessInfoTeam)
         {
             _uow = uow;
-            _frame = stackFrame.PeekContext();
+            _frame = stackFrame.PeekContext(_currentContext);
             GetRoot().Wait();
             ViewBag.OrganizationName = bi.OrganizationName;
             ViewBag.CallerId = _frame.callerId;

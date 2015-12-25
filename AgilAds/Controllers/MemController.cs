@@ -24,14 +24,15 @@ namespace AgilAds.Controllers
             : base(uow, stackFrame.stackContext.Member)
         {
             _uow = uow;
-            _frame = stackFrame.PeekContext();
+            _frame = stackFrame.PeekContext(_currentContext);
             GetRoot().Wait();
             ViewBag.OrganizationName = rep.OrganizationName;
             ViewBag.CallerId = _frame.callerId;
         }
         private async Task GetRoot()
         {
-            rep = await db.Reps.SingleAsync(r => r.id == (int)_frame.param);
+            rep = await db.Reps.SingleAsync(
+                r => r.id == (int)_frame.param).ConfigureAwait(continueOnCapturedContext:false);
         }
 
         // GET: Mem

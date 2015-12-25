@@ -23,7 +23,7 @@ namespace AgilAds.Controllers
             : base(uow, stackFrame.stackContext.businessInfoContact)
         {
             _uow = uow;
-            _frame = stackFrame.PeekContext();
+            _frame = stackFrame.PeekContext(_currentContext);
             GetRoot().Wait();
             ViewBag.OrganizationName = bi.OrganizationName;
             ViewBag.CallerId = _frame.callerId;

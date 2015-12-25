@@ -24,7 +24,7 @@ namespace AgilAds.Controllers
             : base(uow, stackFrame.stackContext.Institution)
         {
             _uow = uow;
-            _frame = stackFrame.PeekContext();
+            _frame = stackFrame.PeekContext(_currentContext);
            GetRoot().Wait();
            ViewBag.OrganizationName = rep.OrganizationName;
            ViewBag.CallerId = _frame.callerId;
@@ -32,7 +32,7 @@ namespace AgilAds.Controllers
         private async Task GetRoot()
         {
             var task =  db.Reps.Include("Institutions").SingleAsync(r => r.id == (int)_frame.param);
-            rep = await task.ConfigureAwait(false);
+            rep = await task.ConfigureAwait(continueOnCapturedContext:false);
         }
 
         // GET: Ins

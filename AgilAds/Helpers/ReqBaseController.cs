@@ -12,7 +12,7 @@ namespace AgilAds.Helpers
     public class ReqBaseController : Controller
     {
         private IUnitOfWorkAsync _uow;
-        private stackFrame.stackContext _currentContext;
+        protected stackFrame.stackContext _currentContext;
         public ReqBaseController(IUnitOfWorkAsync uow, stackFrame.stackContext context)
         {
             _uow = uow;

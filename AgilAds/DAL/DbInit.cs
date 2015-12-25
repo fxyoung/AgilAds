@@ -88,18 +88,33 @@ namespace AgilAds.DAL
                             Contact="foo@bar.com"}};
             p = new Person(){Firstname="Al", Lastname="Johnstone", Contacts=pc, Username="aljohnstone"};
             var memAl = testdata.addMemberOrg(repId, p, bi);
+            testdata.addBusinessContact(memAl, new BusinessContact()
+            {
+                Contact = "alempo@gmail.com",
+                Method = ContactInfo.contactMethod.email
+            });
             bi = new BusinessInfo() { OrganizationName = "Hot Shot Beauty Salon" };
             pc = new List<PersonalContact>() { new PersonalContact(){ 
                             Method=AgilAds.Models.ContactInfo.contactMethod.phone, 
                             Contact="1-800-555-1212"}};
             p = new Person() { Firstname = "Mabel", Lastname = "Smith", Contacts = pc, Username="mabelsmith" };
             var memMabel = testdata.addMemberOrg(repId, p, bi);
+            testdata.addBusinessContact(memMabel, new BusinessContact()
+            {
+                Contact = "hotshot@gmail.com",
+                Method = ContactInfo.contactMethod.email
+            });
             bi = new BusinessInfo() { OrganizationName = "The Hat Store" };
             pc = new List<PersonalContact>() { new PersonalContact(){ 
                             Method=AgilAds.Models.ContactInfo.contactMethod.email, 
                             Contact="missy@hats.com"}};
             p = new Person() { Firstname = "Missy", Lastname = "Fine", Contacts = pc, Username="missyfine" };
             var memMissy = testdata.addMemberOrg(repId, p, bi);
+            testdata.addBusinessContact(memMissy, new BusinessContact()
+            {
+                Contact = "hatstore@gmail.com",
+                Method = ContactInfo.contactMethod.email
+            });
             bi = new BusinessInfo() { OrganizationName = "Sue Hu's Pool Hall" };
             pc = new List<PersonalContact>() { new PersonalContact(){ 
                             Method=AgilAds.Models.ContactInfo.contactMethod.sms, 
@@ -107,6 +122,11 @@ namespace AgilAds.DAL
             p = new Person() { Firstname = "Sue", Lastname = "Hu", Contacts = pc };
             p.Username = (p.Firstname + "_" + p.Lastname).ToLower();
             var memSue = testdata.addMemberOrg(repId, p, bi);
+            testdata.addBusinessContact(memSue, new BusinessContact()
+            {
+                Contact = "hupool@gmail.com",
+                Method = ContactInfo.contactMethod.email
+            });
             bi = new BusinessInfo() { OrganizationName = "Jake's Auto Repair" };
             pc = new List<PersonalContact>() { new PersonalContact(){ 
                             Method=AgilAds.Models.ContactInfo.contactMethod.email, 
@@ -114,6 +134,11 @@ namespace AgilAds.DAL
             p = new Person() { Firstname = "Jake", Lastname = "Memphis", Contacts = pc };
             p.Username = (p.Firstname + p.Lastname).ToLower();
             var memJake = testdata.addMemberOrg(repId, p, bi);
+            testdata.addBusinessContact(memJake, new BusinessContact()
+            {
+                Contact = "autojake@gmail.com",
+                Method = ContactInfo.contactMethod.email
+            });
             var bc = new List<BusinessContact>(){ new BusinessContact(){
                             Method=AgilAds.Models.ContactInfo.contactMethod.address, 
                             Contact="3233 W 47th Blvd, Seahurst, Wa 98145"}};
@@ -124,6 +149,11 @@ namespace AgilAds.DAL
             p = new Person() { Firstname = "Maria", Lastname = "Jones", Contacts = pc };
             p.Username = (p.Firstname + p.Lastname).ToLower();
             var insBCOC = testdata.addInstitution(repId, p, bi);
+            testdata.addBusinessContact(insBCOC, new BusinessContact()
+            {
+                Contact = "BCOC@gmail.com",
+                Method = ContactInfo.contactMethod.email
+            });
             pc = new List<PersonalContact>() { new PersonalContact(){ 
                             Method=AgilAds.Models.ContactInfo.contactMethod.phone, 
                             Contact="206--555-4321 ext 4427"}};
@@ -145,6 +175,11 @@ namespace AgilAds.DAL
             p = new Person() { Firstname = "Paul", Lastname = "Ingles", Contacts = pc };
             p.Username = (p.Firstname + p.Lastname).ToLower();
             var insSSCCSOB = testdata.addInstitution(repId, p, bi);
+            testdata.addBusinessContact(insSSCCSOB, new BusinessContact()
+            {
+                Contact = "SSCCSOB@gmail.com",
+                Method = ContactInfo.contactMethod.email
+            });
             pc = new List<PersonalContact>() { new PersonalContact(){ 
                             Method=AgilAds.Models.ContactInfo.contactMethod.phone, 
                             Contact="206--555-2805 ext 427"}};
@@ -234,10 +269,10 @@ namespace AgilAds.DAL
             }
             public void addBusinessContact(int repId, BusinessContact bc)
             {
-                var rep = _context.Reps.FirstOrDefault(r => r.id.Equals(repId));
-                if (rep != null)
+                var bi = _context.BusinessInfoes.FirstOrDefault(r => r.id.Equals(repId));
+                if (bi != null)
                 {
-                    rep.Contacts.Add(bc);
+                    bi.Contacts.Add(bc);
                     SaveChanges(_context);
                 }
             }

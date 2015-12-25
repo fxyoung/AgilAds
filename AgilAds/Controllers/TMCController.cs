@@ -24,7 +24,7 @@ namespace AgilAds.Controllers
             : base(uow, stackFrame.stackContext.teamMemberContact)
         {
             _uow = uow;
-            _frame = stackFrame.PeekContext();
+            _frame = stackFrame.PeekContext(_currentContext);
             GetRoot().Wait();
             ViewBag.OrganizationName = person.Business.OrganizationName;
             ViewBag.Person = person.Fullname;

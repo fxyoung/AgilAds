@@ -44,6 +44,16 @@ namespace AgilAds.Helpers
             if (stack == null) return null;
             return stack.Peek();
         }
+        public static stackFrame PeekContext(stackContext context)
+        {
+            var retval = PeekContext();
+            while (retval != null)
+            {
+                if (retval._context == context) break;
+                retval = PopContext();
+            }
+            return retval;
+        }
 
         public static bool VerifyContext(object controller, stackContext expectedContext)
         {
