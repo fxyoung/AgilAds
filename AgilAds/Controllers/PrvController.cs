@@ -13,137 +13,125 @@ using AgilAds.Helpers;
 
 namespace AgilAds.Controllers
 {
-    public class BITController : ReqBaseController, IStackable
+    public class PrvController : ReqBaseController, IStackable
     {
-        private const string idMsg = "BIT Controller";
         private AgilAdsDataContext db = new AgilAdsDataContext();
         private IUnitOfWorkAsync _uow;
+        private const string idMsg = "PRV Controller";
         private stackFrame _frame;
-        private BusinessInfo bi;
-        public BITController(IUnitOfWorkAsync uow) : base(uow, stackFrame.stackContext.businessInfoTeam)
+        private Person person;
+        public PrvController(IUnitOfWorkAsync uow) : base(uow,stackFrame.stackContext.Priv)
         {
             _uow = uow;
             _frame = stackFrame.PeekContext(_currentContext);
             GetRoot().Wait();
-            ViewBag.OrganizationName = bi.OrganizationName;
+            ViewBag.OrganizationName = person.Business.OrganizationName;
+            ViewBag.Person = person.Fullname;
             ViewBag.CallerId = _frame.callerId;
         }
         private async Task GetRoot()
         {
-            bi = await db.BusinessInfoes.SingleOrDefaultAsync(
-                b => b.id == (int)_frame.param).ConfigureAwait(continueOnCapturedContext:false);
+            person = await db.People.SingleAsync(
+                p => p.id == (int)_frame.param).ConfigureAwait(continueOnCapturedContext: false);
         }
 
-        // GET: BIT
-        public ActionResult Index()
+        // GET: Prv
+        public async Task<ActionResult> Index()
         {
-               return View(bi.Team.ToList());
+            return View(await db.Privs.Where(p => p.Username == person.Username).ToListAsync());
         }
 
-        public ActionResult Contact(int id)
-        {
-            var route = stackFrame.Invoke(stackFrame.stackContext.teamMemberContact, id, idMsg);
-            return RedirectToRoute(route);
-        }
-
-        public ActionResult Privilege(int id)
-        {
-            var route = stackFrame.Invoke(stackFrame.stackContext.Priv, id, idMsg);
-            return RedirectToRoute(route);
-        }
-
-        // GET: BIT/Details/5
+        // GET: Prv/Details/5
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Person person = await db.People.FindAsync(id);
-            if (person == null)
+            Priv priv = await db.Privs.FindAsync(id);
+            if (priv == null)
             {
                 return HttpNotFound();
             }
-            return View(person);
+            return View(priv);
         }
 
-        // GET: BIT/Create
+        // GET: Prv/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: BIT/Create
+        // POST: Prv/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "id,Firstname,Lastname,Username")] Person person)
+        public async Task<ActionResult> Create([Bind(Include = "id,Username,Context,Action")] Priv priv)
         {
             if (ModelState.IsValid)
             {
-                db.People.Add(person);
-                bi.Team.Add(person);
+                db.Privs.Add(priv);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(person);
+
+            return View(priv);
         }
 
-        // GET: BIT/Edit/5
+        // GET: Prv/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Person person = await db.People.FindAsync(id);
-            if (person == null)
+            Priv priv = await db.Privs.FindAsync(id);
+            if (priv == null)
             {
                 return HttpNotFound();
             }
-            return View(person);
+            return View(priv);
         }
 
-        // POST: BIT/Edit/5
+        // POST: Prv/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "id,Fullname,Firstname,Lastname,Username")] Person person)
+        public async Task<ActionResult> Edit([Bind(Include = "id,Username,Context,Action")] Priv priv)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(person).State = EntityState.Modified;
+                db.Entry(priv).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(person);
+            return View(priv);
         }
 
-        // GET: BIT/Delete/5
+        // GET: Prv/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Person person = await db.People.FindAsync(id);
-            if (person == null)
+            Priv priv = await db.Privs.FindAsync(id);
+            if (priv == null)
             {
                 return HttpNotFound();
             }
-            return View(person);
+            return View(priv);
         }
 
-        // POST: BIT/Delete/5
+        // POST: Prv/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Person person = await db.People.FindAsync(id);
-            bi.Team.Remove(person);
-            db.People.Remove(person);
+            Priv priv = await db.Privs.FindAsync(id);
+            db.Privs.Remove(priv);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }

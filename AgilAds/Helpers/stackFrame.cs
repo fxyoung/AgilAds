@@ -8,7 +8,15 @@ namespace AgilAds.Helpers
 {
     public class stackFrame
     {
-        public enum stackContext { businessInfoTeam, businessInfoContact, teamMemberContact, Rep, Member, Institution }
+        public enum stackContext { 
+            businessInfoTeam, 
+            businessInfoContact, 
+            teamMemberContact, 
+            Rep, 
+            Member, 
+            Institution,
+            Priv
+        }
         private static Dictionary<stackContext, RouteValueDictionary> _routes =
             new Dictionary<stackContext, RouteValueDictionary>() { 
             { stackContext.Rep, new RouteValueDictionary(new { controller = "Rep", action = "Index" }) } ,

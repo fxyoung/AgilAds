@@ -79,11 +79,9 @@ namespace AgilAds.Attributes
                 GetPrivsForUser(username);
             foreach (var priv in privs)
             {
-                var context = (Context)Enum.Parse(typeof(Context), priv.Context);
-                var action = (Action)Enum.Parse(typeof(Action), priv.Action);
-                if (!retval.ContainsKey(context))
-                    retval.Add(context, new List<Action>());
-                if (!retval[context].Contains(action)) retval[context].Add(action);
+                if (!retval.ContainsKey(priv.Context))
+                    retval.Add(priv.Context, new List<Action>());
+                if (!retval[priv.Context].Contains(priv.Action)) retval[priv.Context].Add(priv.Action);
             }
             return retval;
         }

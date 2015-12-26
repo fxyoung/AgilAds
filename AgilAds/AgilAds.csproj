@@ -193,7 +193,6 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
-    <Compile Include="Attributes\Privilege.cs" />
     <Compile Include="Attributes\RequirementAttribute.cs" />
     <Compile Include="Attributes\Valid.cs" />
     <Compile Include="BusinessServices\Administration\AdminServices.cs" />
@@ -208,6 +207,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BICController.cs" />
     <Compile Include="Controllers\BITController.cs" />
+    <Compile Include="Controllers\PrvController.cs" />
     <Compile Include="Controllers\TMCController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InsController.cs" />
@@ -231,6 +231,10 @@
     <Compile Include="MigrationsAgilAdsDb\201512231934195_Initial.cs" />
     <Compile Include="MigrationsAgilAdsDb\201512231934195_Initial.Designer.cs">
       <DependentUpon>201512231934195_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MigrationsAgilAdsDb\201512260818188_PrivUpdate.cs" />
+    <Compile Include="MigrationsAgilAdsDb\201512260818188_PrivUpdate.Designer.cs">
+      <DependentUpon>201512260818188_PrivUpdate.cs</DependentUpon>
     </Compile>
     <Compile Include="MigrationsAgilAdsDb\Configuration.cs" />
     <Compile Include="MigrationsApplicationDb\201511252212224_Initial.cs" />
@@ -362,6 +366,11 @@
     <Content Include="Views\BIC\Details.cshtml" />
     <Content Include="Views\BIC\Edit.cshtml" />
     <Content Include="Views\BIC\Index.cshtml" />
+    <Content Include="Views\Prv\Create.cshtml" />
+    <Content Include="Views\Prv\Delete.cshtml" />
+    <Content Include="Views\Prv\Details.cshtml" />
+    <Content Include="Views\Prv\Edit.cshtml" />
+    <Content Include="Views\Prv\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BusinessServices\Utility\" />
@@ -376,6 +385,9 @@
   <ItemGroup>
     <EmbeddedResource Include="MigrationsAgilAdsDb\201512231934195_Initial.resx">
       <DependentUpon>201512231934195_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MigrationsAgilAdsDb\201512260818188_PrivUpdate.resx">
+      <DependentUpon>201512260818188_PrivUpdate.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MigrationsApplicationDb\201511252212224_Initial.resx">
       <DependentUpon>201511252212224_Initial.cs</DependentUpon>
